@@ -20,20 +20,36 @@ class HomeV extends StatelessWidget {
             ? CupertinoActivityIndicator()
             : ListView(
                 children: [
-                  CarouselSlider(
-                    items: home.banners
-                        .map<Widget>((banner) => CachedNetworkImage(
-                              imageUrl: UPLOAD_URL + "/" + banner.filename,
-                            ))
-                        .toList(),
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      aspectRatio: 2075 / 920,
-                      viewportFraction: 1.0,
+                  _buildCarouselSlider(home),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: CupertinoSlidingSegmentedControl(
+                      groupValue: home.selectedCategory,
+                      children: {
+                        for (int i = 0; i < home.categories.length; i++)
+                          i: Text(home.categories[i].name),
+                      },
+                      onValueChanged: (category) =>
+                          home.selectedCategory = category,
                     ),
-                  ),
+                  )
                 ],
               ),
+      ),
+    );
+  }
+
+  CarouselSlider _buildCarouselSlider(HomeP home) {
+    return CarouselSlider(
+      items: home.banners
+          .map<Widget>((banner) => CachedNetworkImage(
+                imageUrl: UPLOAD_URL + "/" + banner.filename,
+              ))
+          .toList(),
+      options: CarouselOptions(
+        autoPlay: true,
+        aspectRatio: 2075 / 920,
+        viewportFraction: 1.0,
       ),
     );
   }

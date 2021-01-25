@@ -10,6 +10,13 @@ class HomeP extends ChangeNotifier {
   bool _loading = true;
   bool get loading => _loading;
 
+  int _selectedCategory = 0;
+  int get selectedCategory => _selectedCategory;
+  set selectedCategory(int cat) {
+    _selectedCategory = cat;
+    notifyListeners();
+  }
+
   HomeP() {
     print("runs HomeP");
     Network().getHome().then((data) {
