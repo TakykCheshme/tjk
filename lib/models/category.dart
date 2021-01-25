@@ -10,14 +10,14 @@ class Category {
   List<Product> get products => _products;
 
   Category({
-    int id,
+    String id,
     String name,
     List<dynamic> products,
   }) {
-    _id = id;
+    _id = int.parse(id);
     _name = name;
     _products = products
-        .map((e) => Product(
+        .map<Product>((e) => Product(
               id: int.parse(e["id"]),
               name: e["name"],
               price: double.parse(e["price"]),
@@ -26,5 +26,13 @@ class Category {
               cover: e["cover"],
             ))
         .toList();
+  }
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    return Category(
+      id: json["id"],
+      name: json["name"],
+      products: json["products"],
+    );
   }
 }
