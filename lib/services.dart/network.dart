@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
-import 'package:flutter/services.dart';
 
 class Network {
   Dio _dio;
@@ -11,7 +10,6 @@ class Network {
   Options _cacheOptions;
 
   Network() {
-    print("runs Network");
     _dio = Dio();
     _dioCacheManager = DioCacheManager(CacheConfig());
     _dio.options.baseUrl = "https://tjk.com.tm/gala/tjk/customapi";
@@ -22,7 +20,6 @@ class Network {
   }
 
   Future<Map<String, dynamic>> getHome() async {
-    print("runs getHome");
     Response response = await _dio.get(
       "/index.php",
       queryParameters: {"language": "ru"},

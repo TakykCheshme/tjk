@@ -7,6 +7,9 @@ class HomeP extends ChangeNotifier {
   List<Bannerr> banners;
   List<Category> categories;
 
+  bool _loading = true;
+  bool get loading => _loading;
+
   HomeP() {
     print("runs HomeP");
     Network().getHome().then((data) {
@@ -16,7 +19,7 @@ class HomeP extends ChangeNotifier {
       categories = data["categories"]
           .map<Category>((json) => Category.fromJson(json))
           .toList();
-      print(categories[0].products[0].name);
+      _loading = false;
     });
   }
 }

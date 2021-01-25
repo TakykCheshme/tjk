@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +15,25 @@ class HomeV extends StatelessWidget {
         middle: Text("Türkmenbaşy Jins Toplumy", style: titleTS),
         trailing: Icon(CupertinoIcons.cart, size: 28.0),
       ),
-      child: ListView(
-        children: [],
+      child: Consumer<HomeP>(
+        builder: (context, home, child) => home.loading
+            ? CupertinoActivityIndicator()
+            : ListView(
+                children: [
+                  CarouselSlider(
+                    items: home.banners
+                        .map<Widget>((banner) => CachedNetworkImage(
+                              imageUrl: UPLOAD_URL + "/" + banner.filename,
+                            ))
+                        .toList(),
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      aspectRatio: 2075 / 920,
+                      viewportFraction: 1.0,
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }
