@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tjk/view/accountV.dart';
+import 'package:tjk/view/favoritesV.dart';
 import 'package:tjk/view/homeV.dart';
 import 'package:tjk/view/searchV.dart';
+import 'package:tjk/view/settingsV.dart';
 
 class MainV extends StatelessWidget {
   @override
@@ -12,7 +14,9 @@ class MainV extends StatelessWidget {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home)),
           BottomNavigationBarItem(icon: Icon(Icons.search)),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite)),
           BottomNavigationBarItem(icon: Icon(Icons.person)),
+          BottomNavigationBarItem(icon: Icon(Icons.settings)),
         ],
       ),
       tabBuilder: (BuildContext context, int index) {
@@ -24,8 +28,16 @@ class MainV extends StatelessWidget {
           return CupertinoTabView(
             builder: (context) => SearchV(),
           );
+        else if (index == 2)
+          return CupertinoTabView(
+            builder: (context) => FavoritesV(),
+          );
+        else if (index == 3)
+          return CupertinoTabView(
+            builder: (context) => AccountV(),
+          );
         return CupertinoTabView(
-          builder: (context) => AccountV(),
+          builder: (context) => SettingsV(),
         );
       },
     );
