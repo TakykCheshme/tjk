@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tjk/view/accountV.dart';
-import 'package:tjk/view/favoritesV.dart';
-import 'package:tjk/view/homeV.dart';
-import 'package:tjk/view/searchV.dart';
-import 'package:tjk/view/settingsV.dart';
+import 'package:tjk/views/accountV.dart';
+import 'package:tjk/views/favoritesV.dart';
+import 'package:tjk/views/homeV.dart';
+import 'package:tjk/views/searchV.dart';
+import 'package:tjk/views/settingsV.dart';
 
 class MainV extends StatelessWidget {
   @override
