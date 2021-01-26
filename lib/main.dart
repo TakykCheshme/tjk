@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:tjk/const.dart';
 import 'package:tjk/providers/homeP.dart';
 import 'package:tjk/views/mainV.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: CupertinoThemeData(
           brightness: Brightness.light,
-          primaryColor: Color(0xff346D95),
+          primaryColor: primaryColor,
         ),
         home: MainV(),
       ),

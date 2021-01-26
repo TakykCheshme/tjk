@@ -3,6 +3,16 @@ import 'package:tjk/const.dart';
 import 'package:tjk/services.dart/network.dart';
 
 class DetailP extends ChangeNotifier {
+  bool _loading = true;
+  bool get loading => _loading;
+
+  int _selectedAttribute = 0;
+  int get selectedAttribute => _selectedAttribute;
+  set selectedAttribute(int attr) {
+    _selectedAttribute = attr;
+    notifyListeners();
+  }
+
   List<String> _images;
   List<String> _attributes;
 
@@ -15,8 +25,10 @@ class DetailP extends ChangeNotifier {
           .map<String>((image) => getCoverById(image["id"]))
           .toList();
       _attributes = product["attributes"]
-          .map<String>((attribute) => attribute["value"])
+          .map<String>((attribute) => attribute["value"].toString())
           .toList();
+      _loading = false;
+      notifyListeners();
     });
   }
 }
