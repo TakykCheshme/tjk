@@ -18,7 +18,6 @@ class HomeP extends ChangeNotifier {
   }
 
   HomeP() {
-    print("runs HomeP");
     Network().getHome().then((data) {
       banners = data["banners"]
           .map<Bannerr>((json) => Bannerr.fromJson(json))
@@ -27,6 +26,7 @@ class HomeP extends ChangeNotifier {
           .map<Category>((json) => Category.fromJson(json))
           .toList();
       _loading = false;
+      notifyListeners();
     });
   }
 }
