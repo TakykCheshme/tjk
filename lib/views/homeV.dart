@@ -64,7 +64,7 @@ class HomeV extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                           child: CachedNetworkImage(
                             fit: BoxFit.cover,
-                            imageUrl: getCoverById(product.cover),
+                            imageUrl: product.cover,
                             placeholder: (context, str) =>
                                 CupertinoActivityIndicator(),
                           ),

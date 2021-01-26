@@ -1,3 +1,5 @@
+import 'package:tjk/const.dart';
+
 class Product {
   int _id;
   String _name;
@@ -5,6 +7,13 @@ class Product {
   String _reference;
   String _brand;
   String _cover;
+
+  int get id => _id;
+  String get name => _name;
+  double get price => _price;
+  String get reference => _reference;
+  String get brand => _brand;
+  String get cover => _cover;
 
   Product({
     int id,
@@ -19,13 +28,17 @@ class Product {
     _price = price;
     _reference = reference;
     _brand = brand;
-    _cover = cover;
+    _cover = getCoverById(cover);
   }
 
-  int get id => _id;
-  String get name => _name;
-  double get price => _price;
-  String get reference => _reference;
-  String get brand => _brand;
-  String get cover => _cover;
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: int.parse(json["id"]),
+      name: json["name"],
+      price: double.parse(json["price"]),
+      reference: json["reference"],
+      brand: json["brand"],
+      cover: json["cover"],
+    );
+  }
 }

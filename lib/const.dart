@@ -13,4 +13,8 @@ String getCoverById(String id) {
   return IMAGE_URL + cover + "/" + id + ".jpg";
 }
 
+String dashSlashRemover(String s) {
+  return s.replaceAll(RegExp(r'-'), ' ').replaceAll(RegExp(r'/'), ' ');
+}
+
 Color primaryColor = Color(0xff346D95);

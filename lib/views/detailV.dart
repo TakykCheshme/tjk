@@ -32,18 +32,85 @@ class DetailV extends StatelessWidget {
           trailing: Icon(CupertinoIcons.cart, size: 28.0),
         ),
         child: Consumer<DetailP>(
-            builder: (context, detail, child) => detail.loading
-                ? CupertinoActivityIndicator()
-                : ListView(
-                    children: [
-                      _buildCarouselSlider(detail),
-                      Divider(thickness: 1.0),
-                      _buildTitlePriceLike(),
-                      Divider(thickness: 1.0),
-                      _buildSizes(detail),
-                      Divider(thickness: 1.0),
-                    ],
-                  )),
+          builder: (context, detail, child) => detail.loading
+              ? CupertinoActivityIndicator()
+              : ListView(
+                  children: [
+                    _buildCarouselSlider(detail),
+                    Divider(thickness: 1.0),
+                    _buildTitlePriceLike(),
+                    Divider(thickness: 1.0),
+                    _buildSizes(detail),
+                    Divider(thickness: 1.0),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text("Похожие товары:", style: titleTS),
+                    ),
+                    _buildRelatedSlider(detail),
+                    SizedBox(height: 20.0),
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+
+  Container _buildRelatedSlider(DetailP detail) {
+    return Container(
+      height: 200.0,
+      child: ListView.builder(
+        padding: const EdgeInsets.only(right: 20.0),
+        scrollDirection: Axis.horizontal,
+        itemCount: detail.related.length,
+        itemBuilder: (context, index) {
+          Product rel = detail.related[index];
+          return GestureDetector(
+            onTap: () => Navigator.of(context).push(
+              CupertinoPageRoute(
+                builder: (context) => DetailV(rel),
+              ),
+            ),
+            child: Container(
+              margin: const EdgeInsets.only(left: 20.0),
+              width: 160.0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Stack(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 160 / 200,
+                      child: CachedNetworkImage(
+                        imageUrl: rel.cover,
+                        fit: BoxFit.cover,
+                        placeholder: (_, __) => CupertinoActivityIndicator(),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(.8),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 10.0,
+                      right: 10.0,
+                      child: Text(
+                        rel.price.toStringAsFixed(2) + " m.",
+                        style: titleTS.copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -88,7 +155,7 @@ class DetailV extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.name, style: title28TS),
+                Text(product.name, style: titleTS),
                 Text(product.price.toStringAsFixed(2) + " m.",
                     style: title28TS.copyWith(fontWeight: FontWeight.bold)),
               ],
