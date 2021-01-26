@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tjk/const.dart';
+import 'package:tjk/language.dart';
 import 'package:tjk/models/product.dart';
+import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/detailP.dart';
 import 'package:tjk/providers/homeP.dart';
 
@@ -16,11 +18,12 @@ class DetailV extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeP home = Provider.of<HomeP>(context);
 
-    return ChangeNotifierProvider(
+    return ChangeNotifierProxyProvider<AppP, DetailP>(
       create: (context) => DetailP(
         id: product.id,
         categoryId: home.categories[home.selectedCategory].id,
       ),
+      update: (context, app, detail) => detail..ln = app.ln,
       child: CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           middle: Text(
@@ -44,7 +47,8 @@ class DetailV extends StatelessWidget {
                     Divider(thickness: 1.0),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: Text("Похожие товары:", style: titleTS),
+                      child: Text(LN["menzesh_harytlar"][detail.ln],
+                          style: titleTS),
                     ),
                     _buildRelatedSlider(detail),
                     SizedBox(height: 20.0),
@@ -121,7 +125,7 @@ class DetailV extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text("Размеры:", style: titleTS),
+          Text(LN["olchegler"][detail.ln], style: titleTS),
           SizedBox(height: 10.0),
           CupertinoSlidingSegmentedControl(
             groupValue: detail.selectedAttribute,

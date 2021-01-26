@@ -17,16 +17,22 @@ class HomeP extends ChangeNotifier {
     notifyListeners();
   }
 
-  HomeP() {
-    Network().getHome().then((data) {
-      banners = data["banners"]
-          .map<Bannerr>((json) => Bannerr.fromJson(json))
-          .toList();
-      categories = data["categories"]
-          .map<Category>((json) => Category.fromJson(json))
-          .toList();
-      _loading = false;
-      notifyListeners();
-    });
+  String _ln;
+  String get ln => _ln;
+  set ln(String ln) {
+    if (ln != _ln)
+      Network().getHome(ln).then((data) {
+        banners = data["banners"]
+            .map<Bannerr>((json) => Bannerr.fromJson(json))
+            .toList();
+        categories = data["categories"]
+            .map<Category>((json) => Category.fromJson(json))
+            .toList();
+        _loading = false;
+        notifyListeners();
+      });
+
+    _ln = ln;
+    notifyListeners();
   }
 }

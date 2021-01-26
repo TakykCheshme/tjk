@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:provider/provider.dart';
 
 class Network {
   Dio _dio;
@@ -19,10 +20,10 @@ class Network {
     _cacheOptions = buildCacheOptions(Duration(days: 7));
   }
 
-  Future<Map<String, dynamic>> getHome() async {
+  Future<Map<String, dynamic>> getHome(String ln) async {
     Response response = await _dio.get(
       "/index.php",
-      queryParameters: {"language": "ru"},
+      queryParameters: {"language": ln},
       options: _cacheOptions,
     );
     return jsonDecode(response.data);

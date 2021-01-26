@@ -39,4 +39,11 @@ class DetailP extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  String _ln;
+  String get ln => _ln;
+  set ln(String ln) {
+    _ln = ln;
+    notifyListeners();
+  }
 }
