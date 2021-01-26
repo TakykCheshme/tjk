@@ -7,6 +7,7 @@ import 'package:tjk/const.dart';
 import 'package:tjk/models/category.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/homeP.dart';
+import 'package:tjk/views/detailV.dart';
 
 class HomeV extends StatelessWidget {
   @override
@@ -48,51 +49,61 @@ class HomeV extends StatelessWidget {
             Category category = home.categories[home.selectedCategory];
             Product product = category.products[index];
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    AspectRatio(
-                      aspectRatio: 0.75,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          imageUrl: getCoverById(product.cover),
-                          placeholder: (context, str) =>
-                              CupertinoActivityIndicator(),
+            return GestureDetector(
+              onTap: () => Navigator.of(context).push(
+                CupertinoPageRoute(builder: (context) => DetailV(product)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 0.75,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: getCoverById(product.cover),
+                            placeholder: (context, str) =>
+                                CupertinoActivityIndicator(),
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: 10.0,
-                      right: 10.0,
-                      child: Container(
-                        padding: const EdgeInsets.all(5.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
+                      Positioned(
+                        bottom: 10.0,
+                        right: 10.0,
+                        child: Container(
+                          padding: const EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.favorite_border),
                         ),
-                        child: Icon(Icons.favorite_border),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 5.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Text(
-                    product.price.toStringAsFixed(2) + " m.",
-                    style: titleTS,
+                      )
+                    ],
                   ),
-                ),
-                SizedBox(height: 3.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Text(product.name, style: subtitleTS),
-                )
-              ],
+                  SizedBox(height: 5.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      product.price.toStringAsFixed(2) + " m.",
+                      style: titleTS,
+                    ),
+                  ),
+                  SizedBox(height: 3.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      product.name,
+                      style: subtitleTS,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+                ],
+              ),
             );
           }),
     );

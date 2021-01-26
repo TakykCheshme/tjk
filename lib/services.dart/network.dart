@@ -27,4 +27,18 @@ class Network {
     );
     return jsonDecode(response.data);
   }
+
+  Future<Map<String, dynamic>> getDetail({int id, int categoryId}) async {
+    Response response = await _dio.get(
+      "/product.php",
+      queryParameters: {
+        "id": id,
+        "category": categoryId,
+        "language": "ru",
+      },
+      options: _cacheOptions,
+    );
+
+    return jsonDecode(response.data);
+  }
 }
