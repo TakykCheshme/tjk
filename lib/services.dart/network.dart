@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
-import 'package:provider/provider.dart';
 
 class Network {
   Dio _dio;
@@ -40,6 +39,15 @@ class Network {
       options: _cacheOptions,
     );
 
+    return jsonDecode(response.data);
+  }
+
+  Future<Map<String, dynamic>> getSearch(String word, String ln) async {
+    Response response = await _dio.get(
+      "/search.php",
+      queryParameters: {"language": ln, "word": word},
+      options: _cacheOptions,
+    );
     return jsonDecode(response.data);
   }
 }
