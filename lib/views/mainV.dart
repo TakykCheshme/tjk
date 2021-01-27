@@ -1,16 +1,17 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:tjk/views/accountV.dart';
 import 'package:tjk/views/favoritesV.dart';
 import 'package:tjk/views/homeV.dart';
 import 'package:tjk/views/searchV.dart';
 import 'package:tjk/views/settingsV.dart';
 
-class MainV extends StatelessWidget {
+class MainV extends StatefulWidget {
+  @override
+  _MainVState createState() => _MainVState();
+}
+
+class _MainVState extends State<MainV> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(

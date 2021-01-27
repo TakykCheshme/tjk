@@ -1,25 +1,112 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:tjk/language.dart';
+import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/searchP.dart';
+import 'package:tjk/views/detailV.dart';
 
 import '../const.dart';
 
 class SearchV extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AppP app = Provider.of<AppP>(context);
-
-    return ChangeNotifierProvider(
+    TextEditingController _controller = TextEditingController();
+    return ChangeNotifierProxyProvider<AppP, SearchP>(
       create: (context) => SearchP(),
-      child: CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: Text(LN["gozleg"][app.ln], style: titleTS),
-          trailing: Icon(CupertinoIcons.cart, size: 28.0),
+      update: (context, app, search) => search..ln = app.ln,
+      child: Consumer<SearchP>(
+        builder: (context, search, _) => CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+            middle: Text(LN["gozleg"][search.ln], style: titleTS),
+            trailing: Icon(CupertinoIcons.cart, size: 28.0),
+          ),
+          child: Scaffold(
+            body: Column(
+              children: [
+                SizedBox(height: 90.0),
+                _buildSearchFiled(_controller, search),
+                search.loading
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: CupertinoActivityIndicator(),
+                      )
+                    : _buildProductList(search)
+              ],
+            ),
+          ),
         ),
-        child: Center(child: Text("Search")),
+      ),
+    );
+  }
+
+  Widget _buildProductList(SearchP search) {
+    if (search.products == null) return Container();
+    if (search.products.isEmpty)
+      return Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Text(
+          LN["netije_yok"][search.ln],
+          style: titleTS,
+        ),
+      );
+    return Expanded(
+      child: ListView.separated(
+          separatorBuilder: (_, __) => SizedBox(height: 10.0),
+          padding: EdgeInsets.zero,
+          itemCount: search.products.length,
+          itemBuilder: (context, index) {
+            Product product = search.products[index];
+            return ListTile(
+              onTap: () => Navigator.of(context).push(
+                CupertinoPageRoute(
+                  builder: (context) => DetailV(product),
+                ),
+              ),
+              title: Text(product.name, style: titleTS),
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: product.cover,
+                  ),
+                ),
+              ),
+              trailing: Text(
+                product.price.toStringAsFixed(2) + " m.",
+                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              ),
+            );
+          }),
+    );
+  }
+
+  Padding _buildSearchFiled(TextEditingController _controller, SearchP search) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Stack(
+        children: [
+          CupertinoTextField(
+            controller: _controller,
+            padding: const EdgeInsets.fromLTRB(12.0, 8.0, 40.0, 8.0),
+            placeholder: LN["meselem_jalbar"][search.ln],
+            autofocus: true,
+            style: titleTS,
+            onSubmitted: (word) => search.search(word),
+          ),
+          Positioned(
+            right: 0.0,
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              child: Icon(CupertinoIcons.search),
+              onPressed: () => search.search(_controller.text),
+            ),
+          ),
+        ],
       ),
     );
   }

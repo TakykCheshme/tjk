@@ -12,6 +12,9 @@ class SearchP extends ChangeNotifier {
     _loading = true;
     notifyListeners();
 
+    print("word = $word");
+    print("ln = $_ln");
+
     Network().getSearch(word, _ln).then((data) {
       products = data["products"]
           .map<Product>((json) => Product.fromJson(json))

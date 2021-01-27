@@ -7,6 +7,10 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Meňzeş harytlar",
     "ru": "Похожие товары",
   },
+  "turkmenbashy_jins_toplumy": {
+    "tm": "Türkmenbaşy jins toplumy",
+    "ru": "Türkmenbaşy jins toplumy",
+  },
   "sazlamalar": {
     "tm": "Sazlamalar",
     "ru": "Настройки",
@@ -38,5 +42,13 @@ const Map<String, Map<String, String>> LN = {
   "yapmak": {
     "tm": "Ýapmak",
     "ru": "Закрыть",
+  },
+  "meselem_jalbar": {
+    "tm": "Meselem, jalbar",
+    "ru": "Например, джинсы",
+  },
+  "netije_yok": {
+    "tm": "Netije ýok",
+    "ru": "Нет резултата",
   },
 };

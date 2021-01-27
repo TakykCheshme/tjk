@@ -7,6 +7,13 @@ import 'package:path_provider/path_provider.dart';
 class AppP extends ChangeNotifier {
   Box tjkBox;
 
+  int _selectedTab = 0;
+  int get selectedTab => _selectedTab;
+  set selectedTab(int tab) {
+    _selectedTab = tab;
+    notifyListeners();
+  }
+
   String _ln;
   String get ln => _ln;
   set ln(String ln) {
