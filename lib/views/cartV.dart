@@ -24,7 +24,7 @@ class CartV extends StatelessWidget {
               "Clear",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: CupertinoColors.link,
+                color: primaryColor,
               ),
             ),
           ),

@@ -15,4 +15,6 @@ class CartItem {
     _product = product;
     _count = count;
   }
+
+  bool operator ==(o) => _product == o.product;
 }

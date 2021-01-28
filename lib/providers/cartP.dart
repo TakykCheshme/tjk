@@ -11,8 +11,11 @@ class CartP extends ChangeNotifier {
 
   void add(Product product, int count) {
     CartItem item = CartItem(product, count);
-    _items.add(item);
-    print(_items);
+    if (!_items.contains(item))
+      _items.add(item);
+    else {
+      _items.firstWhere((i) => i == item).count++;
+    }
     notifyListeners();
   }
 
