@@ -51,4 +51,16 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Netije ýok",
     "ru": "Нет резултата",
   },
+  "girmek": {
+    "tm": "Girmek",
+    "ru": "Войти",
+  },
+  "yada": {
+    "tm": "ýa-da",
+    "ru": "или",
+  },
+  "hasap_doretmek": {
+    "tm": "Hasap döretmek",
+    "ru": "Регистрация",
+  },
 };
