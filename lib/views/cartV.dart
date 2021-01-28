@@ -21,7 +21,7 @@ class CartV extends StatelessWidget {
           trailing: GestureDetector(
             onTap: cart.clear,
             child: Text(
-              "Clear",
+              LN["arassala"][app.ln],
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: primaryColor,
@@ -47,8 +47,8 @@ class CartV extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20.0),
                               child: CachedNetworkImage(
-                                width: 100.0,
-                                height: 100.0,
+                                width: 120.0,
+                                height: 120.0,
                                 fit: BoxFit.cover,
                                 imageUrl: product.cover,
                                 placeholder: (_, __) =>
@@ -66,8 +66,13 @@ class CartV extends StatelessWidget {
                               ),
                               SizedBox(height: 5.0),
                               Text(
-                                product.price.toStringAsFixed(2) + " m.",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                LN["baha"][app.ln] +
+                                    product.price.toStringAsFixed(2) +
+                                    " m.",
+                              ),
+                              SizedBox(height: 5.0),
+                              Text(
+                                LN["olcheg"][app.ln] + item.size,
                               ),
                               SizedBox(height: 10.0),
                               Row(
@@ -107,7 +112,11 @@ class CartV extends StatelessWidget {
                     itemCount: cart.items.length,
                   ),
                 ),
-                BottomButton(() {}, LN["sargyt_etmek"][app.ln])
+                BottomButton(
+                  () {},
+                  LN["sargyt_etmek"][app.ln] +
+                      " (${cart.totalPrice.toStringAsFixed(2)} man.)",
+                )
               ],
             ),
           ),

@@ -11,10 +11,12 @@ class CartItem {
     _count = count;
   }
 
-  CartItem(Product product, int count) {
+  String size;
+
+  CartItem(Product product, this.size, int count) {
     _product = product;
     _count = count;
   }
 
-  bool operator ==(o) => _product == o.product;
+  bool operator ==(o) => _product == o.product && size == o.size;
 }

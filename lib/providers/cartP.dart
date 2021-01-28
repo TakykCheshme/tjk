@@ -15,8 +15,8 @@ class CartP extends ChangeNotifier {
       _totalPrice += item.product.price * item.count;
   }
 
-  void add(Product product, int count) {
-    CartItem item = CartItem(product, count);
+  void add({Product product, String size = "", int count = 1}) {
+    CartItem item = CartItem(product, size, count);
     if (!_items.contains(item))
       _items.add(item);
     else

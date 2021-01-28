@@ -55,7 +55,11 @@ class DetailV extends StatelessWidget {
                       ),
                     ),
                     BottomButton(
-                      () => cart.add(product, 1),
+                      () => cart.add(
+                        product: product,
+                        size: detail.attributes[detail.selectedAttribute],
+                        count: 1,
+                      ),
                       LN["sebede_goshmak"][detail.ln],
                     )
                   ],
