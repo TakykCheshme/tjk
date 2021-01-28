@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -37,10 +38,10 @@ class MyApp extends StatelessWidget {
           update: (_, app, home) => home..ln = app.ln,
         ),
       ],
-      child: CupertinoApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: CupertinoThemeData(
+        theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: primaryColor,
         ),

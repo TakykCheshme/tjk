@@ -9,24 +9,25 @@ import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/providers/homeP.dart';
 import 'package:tjk/shared/tjk_nvigation_bar.dart';
-import 'package:tjk/views/cartV.dart';
 import 'package:tjk/views/detailV.dart';
 
 class HomeV extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: TJKNavigationBar("Türkmenbaşy jins toplumy"),
-      child: Consumer2<HomeP, FavoritesP>(
-        builder: (context, home, favorites, child) => home.loading
-            ? CupertinoActivityIndicator()
-            : ListView(
-                children: [
-                  _buildCarouselSlider(home),
-                  _buildCupertinoSegmentedControl(home),
-                  _buildProductsGridView(home, favorites)
-                ],
-              ),
+    return Scaffold(
+      body: CupertinoPageScaffold(
+        navigationBar: TJKNavigationBar("Türkmenbaşy jins toplumy"),
+        child: Consumer2<HomeP, FavoritesP>(
+          builder: (context, home, favorites, child) => home.loading
+              ? CupertinoActivityIndicator()
+              : ListView(
+                  children: [
+                    _buildCarouselSlider(home),
+                    _buildCupertinoSegmentedControl(home),
+                    _buildProductsGridView(home, favorites)
+                  ],
+                ),
+        ),
       ),
     );
   }

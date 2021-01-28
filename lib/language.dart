@@ -87,4 +87,8 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Ölçeg: ",
     "ru": "Размер: ",
   },
+  "goshmak": {
+    "tm": "Goşmak",
+    "ru": "Добавить",
+  },
 };

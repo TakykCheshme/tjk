@@ -23,47 +23,78 @@ class DetailV extends StatelessWidget {
     HomeP home = Provider.of<HomeP>(context);
 
     return ChangeNotifierProxyProvider<AppP, DetailP>(
-      create: (context) => DetailP(
+      create: (_) => DetailP(
         id: product.id,
         categoryId: home.categories[home.selectedCategory].id,
       ),
-      update: (context, app, detail) => detail..ln = app.ln,
-      child: CupertinoPageScaffold(
-        navigationBar: TJKNavigationBar(product.name),
-        child: Consumer2<DetailP, CartP>(
-          builder: (context, detail, cart, child) => detail.loading
-              ? CupertinoActivityIndicator()
-              : Stack(
-                  children: [
-                    Positioned.fill(
-                      child: ListView(
-                        children: [
-                          _buildCarouselSlider(detail),
-                          Divider(thickness: 1.0),
-                          _buildTitlePriceLike(context, product),
-                          Divider(thickness: 1.0),
-                          _buildSizes(detail),
-                          Divider(thickness: 1.0),
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(LN["menzesh_harytlar"][detail.ln],
-                                style: titleTS),
-                          ),
-                          _buildRelatedSlider(detail),
-                          SizedBox(height: 50.0),
-                        ],
+      update: (_, app, detail) => detail..ln = app.ln,
+      child: Scaffold(
+        body: CupertinoPageScaffold(
+          navigationBar: TJKNavigationBar(product.name),
+          child: Consumer2<DetailP, CartP>(
+            builder: (_, detail, cart, child) => detail.loading
+                ? CupertinoActivityIndicator()
+                : Stack(
+                    children: [
+                      Positioned.fill(
+                        child: ListView(
+                          children: [
+                            _buildCarouselSlider(detail),
+                            Divider(thickness: 1.0),
+                            _buildTitlePriceLike(context, product),
+                            Divider(thickness: 1.0),
+                            _buildSizes(detail),
+                            Divider(thickness: 1.0),
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Text(LN["menzesh_harytlar"][detail.ln],
+                                  style: titleTS),
+                            ),
+                            _buildRelatedSlider(detail),
+                            SizedBox(height: 50.0),
+                          ],
+                        ),
                       ),
-                    ),
-                    BottomButton(
-                      () => cart.add(
-                        product: product,
-                        size: detail.attributes[detail.selectedAttribute],
-                        count: 1,
-                      ),
-                      LN["sebede_goshmak"][detail.ln],
-                    )
-                  ],
-                ),
+                      Builder(
+                        builder: (contex) => BottomButton(
+                          () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => CupertinoAlertDialog(
+                                title: Text(
+                                  LN["olcheg"][detail.ln] +
+                                      detail
+                                          .attributes[detail.selectedAttribute],
+                                ),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    child: Text(LN["yapmak"][detail.ln]),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                  ),
+                                  CupertinoDialogAction(
+                                    isDefaultAction: true,
+                                    onPressed: () {
+                                      cart.add(
+                                        product: product,
+                                        size: detail.attributes[
+                                            detail.selectedAttribute],
+                                        count: 1,
+                                      );
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(LN["goshmak"][detail.ln]),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          LN["sebede_goshmak"][detail.ln],
+                        ),
+                      )
+                    ],
+                  ),
+          ),
         ),
       ),
     );

@@ -31,7 +31,7 @@ class CartV extends StatelessWidget {
         ),
         child: Scaffold(
           body: Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+            padding: const EdgeInsets.only(top: 20.0),
             child: Stack(
               children: [
                 Positioned.fill(
@@ -108,7 +108,7 @@ class CartV extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (context, index) =>
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 20.0),
                     itemCount: cart.items.length,
                   ),
                 ),
