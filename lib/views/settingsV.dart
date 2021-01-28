@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:tjk/language.dart';
 import 'package:tjk/providers/appP.dart';
+import 'package:tjk/shared/tjk_nvigation_bar.dart';
 
 import '../const.dart';
 
@@ -12,10 +13,7 @@ class SettingsV extends StatelessWidget {
     AppP app = Provider.of<AppP>(context);
 
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text(LN["sazlamalar"][app.ln], style: titleTS),
-        trailing: Icon(CupertinoIcons.cart, size: 28.0),
-      ),
+      navigationBar: TJKNavigationBar(LN["sazlamalar"][app.ln]),
       child: Scaffold(
         body: ListView(
           children: [

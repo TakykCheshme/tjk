@@ -8,6 +8,7 @@ import 'package:tjk/models/category.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/providers/homeP.dart';
+import 'package:tjk/shared/tjk_nvigation_bar.dart';
 import 'package:tjk/views/cartV.dart';
 import 'package:tjk/views/detailV.dart';
 
@@ -15,14 +16,7 @@ class HomeV extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text("Türkmenbaşy jins toplumy", style: titleTS),
-        trailing: GestureDetector(
-            onTap: () => Navigator.of(context, rootNavigator: true).push(
-                  CupertinoPageRoute(builder: (context) => CartV()),
-                ),
-            child: Icon(CupertinoIcons.cart, size: 28.0)),
-      ),
+      navigationBar: TJKNavigationBar("Türkmenbaşy jins toplumy"),
       child: Consumer2<HomeP, FavoritesP>(
         builder: (context, home, favorites, child) => home.loading
             ? CupertinoActivityIndicator()

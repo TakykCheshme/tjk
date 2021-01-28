@@ -7,16 +7,14 @@ import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/shared/product_list_tile.dart';
+import 'package:tjk/shared/tjk_nvigation_bar.dart';
 
 class FavoritesV extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer2<AppP, FavoritesP>(
       builder: (context, app, favorites, child) => CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: Text(LN["halanlarym"][app.ln], style: titleTS),
-          trailing: Icon(CupertinoIcons.cart, size: 28.0),
-        ),
+        navigationBar: TJKNavigationBar(LN["halanlarym"][app.ln]),
         child: Scaffold(
           body: Padding(
             padding: const EdgeInsets.only(top: 10.0),

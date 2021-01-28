@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +6,7 @@ import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/searchP.dart';
 import 'package:tjk/shared/product_list_tile.dart';
-import 'package:tjk/views/detailV.dart';
+import 'package:tjk/shared/tjk_nvigation_bar.dart';
 
 import '../const.dart';
 
@@ -20,10 +19,7 @@ class SearchV extends StatelessWidget {
       update: (context, app, search) => search..ln = app.ln,
       child: Consumer<SearchP>(
         builder: (context, search, _) => CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            middle: Text(LN["gozleg"][search.ln], style: titleTS),
-            trailing: Icon(CupertinoIcons.cart, size: 28.0),
-          ),
+          navigationBar: TJKNavigationBar(LN["gozleg"][search.ln]),
           child: Scaffold(
             body: Column(
               children: [

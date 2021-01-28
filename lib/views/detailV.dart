@@ -11,6 +11,7 @@ import 'package:tjk/providers/cartP.dart';
 import 'package:tjk/providers/detailP.dart';
 import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/providers/homeP.dart';
+import 'package:tjk/shared/tjk_nvigation_bar.dart';
 
 class DetailV extends StatelessWidget {
   DetailV(this.product);
@@ -27,15 +28,7 @@ class DetailV extends StatelessWidget {
       ),
       update: (context, app, detail) => detail..ln = app.ln,
       child: CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: Text(
-            product.name,
-            style: titleTS,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          trailing: Icon(CupertinoIcons.cart, size: 28.0),
-        ),
+        navigationBar: TJKNavigationBar(product.name),
         child: Consumer2<DetailP, CartP>(
           builder: (context, detail, cart, child) => detail.loading
               ? CupertinoActivityIndicator()

@@ -3,19 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:tjk/language.dart';
 import 'package:tjk/providers/appP.dart';
+import 'package:tjk/shared/tjk_nvigation_bar.dart';
 import 'package:tjk/views/loginV.dart';
-
-import '../const.dart';
 
 class AccountV extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppP>(
       builder: (context, app, child) => CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: Text(LN["hasabym"][app.ln], style: titleTS),
-          trailing: Icon(CupertinoIcons.cart, size: 28.0),
-        ),
+        navigationBar: TJKNavigationBar(LN["hasabym"][app.ln]),
         child: Padding(
           padding: const EdgeInsets.all(80.0),
           child: Column(
