@@ -1,18 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:tjk/models/product.dart';
 
 class AppP extends ChangeNotifier {
   Box tjkBox;
-
-  int _selectedTab = 0;
-  int get selectedTab => _selectedTab;
-  set selectedTab(int tab) {
-    _selectedTab = tab;
-    notifyListeners();
-  }
 
   String _ln;
   String get ln => _ln;
@@ -22,17 +13,11 @@ class AppP extends ChangeNotifier {
     notifyListeners();
   }
 
-  AppP() {
-    _initHive().then((box) {
-      tjkBox = box;
-      _ln = box.get("ln", defaultValue: "tm");
-      notifyListeners();
-    });
-  }
+  List<Product> favorites;
 
-  Future<Box> _initHive() async {
-    Directory path = await getApplicationDocumentsDirectory();
-    Hive.init(path.path);
-    return await Hive.openBox("tjk");
+  AppP() {
+    tjkBox = Hive.box("tjk");
+    _ln = tjkBox.get("ln", defaultValue: "tm");
+    notifyListeners();
   }
 }

@@ -8,6 +8,7 @@ import 'package:tjk/language.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/detailP.dart';
+import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/providers/homeP.dart';
 
 class DetailV extends StatelessWidget {
@@ -41,7 +42,7 @@ class DetailV extends StatelessWidget {
                   children: [
                     _buildCarouselSlider(detail),
                     Divider(thickness: 1.0),
-                    _buildTitlePriceLike(),
+                    _buildTitlePriceLike(context, product),
                     Divider(thickness: 1.0),
                     _buildSizes(detail),
                     Divider(thickness: 1.0),
@@ -149,7 +150,7 @@ class DetailV extends StatelessWidget {
     );
   }
 
-  Padding _buildTitlePriceLike() {
+  Padding _buildTitlePriceLike(BuildContext context, Product product) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Row(
@@ -165,13 +166,27 @@ class DetailV extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: primaryColor),
-            ),
-            child: Icon(Icons.favorite_border, size: 28.0),
+          Consumer<FavoritesP>(
+            builder: (context, favorites, child) {
+              bool isFav = favorites.isFav(product);
+              return GestureDetector(
+                onTap: () => favorites.toggle(product),
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: primaryColor,
+                    ),
+                  ),
+                  child: Icon(
+                    isFav ? Icons.favorite : Icons.favorite_border,
+                    size: 28.0,
+                    // color: isFav ? Colors.red : primaryColor,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

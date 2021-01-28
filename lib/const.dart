@@ -8,6 +8,7 @@ const TextStyle title28TS = TextStyle(fontSize: 28.0);
 const TextStyle subtitleTS = TextStyle(fontSize: 18.0, color: Colors.grey);
 
 String getCoverById(String id) {
+  if (id == null) return "";
   String cover = "";
   for (int i = 0; i < id.length; i++) cover = cover + "/" + id[i];
   return IMAGE_URL + cover + "/" + id + ".jpg";

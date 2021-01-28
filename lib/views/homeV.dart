@@ -6,34 +6,33 @@ import 'package:provider/provider.dart';
 import 'package:tjk/const.dart';
 import 'package:tjk/models/category.dart';
 import 'package:tjk/models/product.dart';
+import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/providers/homeP.dart';
 import 'package:tjk/views/detailV.dart';
 
 class HomeV extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    HomeP home = Provider.of<HomeP>(context);
-
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text("Türkmenbaşy jins toplumy", style: titleTS),
         trailing: Icon(CupertinoIcons.cart, size: 28.0),
       ),
-      child: Consumer<HomeP>(
-        builder: (context, home, child) => home.loading
+      child: Consumer2<HomeP, FavoritesP>(
+        builder: (context, home, favorites, child) => home.loading
             ? CupertinoActivityIndicator()
             : ListView(
                 children: [
                   _buildCarouselSlider(home),
                   _buildCupertinoSegmentedControl(home),
-                  _buildProductsGridView(home)
+                  _buildProductsGridView(home, favorites)
                 ],
               ),
       ),
     );
   }
 
-  Padding _buildProductsGridView(HomeP home) {
+  Padding _buildProductsGridView(HomeP home, FavoritesP favorites) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: GridView.builder(
@@ -80,7 +79,13 @@ class HomeV extends StatelessWidget {
                             color: Colors.white,
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(Icons.favorite_border),
+                          child: GestureDetector(
+                              onTap: () => favorites.toggle(product),
+                              child: Icon(
+                                favorites.isFav(product)
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                              )),
                         ),
                       )
                     ],

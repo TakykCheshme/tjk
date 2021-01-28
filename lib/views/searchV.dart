@@ -6,6 +6,7 @@ import 'package:tjk/language.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/searchP.dart';
+import 'package:tjk/shared/product_list_tile.dart';
 import 'package:tjk/views/detailV.dart';
 
 import '../const.dart';
@@ -59,28 +60,7 @@ class SearchV extends StatelessWidget {
           itemCount: search.products.length,
           itemBuilder: (context, index) {
             Product product = search.products[index];
-            return ListTile(
-              onTap: () => Navigator.of(context).push(
-                CupertinoPageRoute(
-                  builder: (context) => DetailV(product),
-                ),
-              ),
-              title: Text(product.name, style: titleTS),
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: AspectRatio(
-                  aspectRatio: 1.0,
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: product.cover,
-                  ),
-                ),
-              ),
-              trailing: Text(
-                product.price.toStringAsFixed(2) + " m.",
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-              ),
-            );
+            return ProductListTile(product);
           }),
     );
   }
