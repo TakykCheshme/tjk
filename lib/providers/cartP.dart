@@ -15,4 +15,24 @@ class CartP extends ChangeNotifier {
     print(_items);
     notifyListeners();
   }
+
+  void removeAt(int index) {
+    _items.removeAt(index);
+    notifyListeners();
+  }
+
+  void clear() {
+    _items.clear();
+    notifyListeners();
+  }
+
+  void increaseAt(int index) {
+    _items[index].count = _items[index].count + 1;
+    notifyListeners();
+  }
+
+  void decreaseAt(int index) {
+    _items[index].count = _items[index].count - 1;
+    notifyListeners();
+  }
 }
