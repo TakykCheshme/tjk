@@ -11,6 +11,7 @@ import 'package:tjk/providers/cartP.dart';
 import 'package:tjk/providers/detailP.dart';
 import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/providers/homeP.dart';
+import 'package:tjk/shared/bottom_button.dart';
 import 'package:tjk/shared/tjk_nvigation_bar.dart';
 
 class DetailV extends StatelessWidget {
@@ -53,25 +54,9 @@ class DetailV extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Positioned(
-                      bottom: 0.0,
-                      right: 0.0,
-                      left: 0.0,
-                      child: GestureDetector(
-                        onTap: () => cart.add(product, 1),
-                        child: Container(
-                          height: 70.0,
-                          width: double.infinity,
-                          color: primaryColor,
-                          child: Center(
-                            child: Text(LN["sebede_goshmak"][detail.ln],
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22.0,
-                                )),
-                          ),
-                        ),
-                      ),
+                    BottomButton(
+                      () => cart.add(product, 1),
+                      LN["sebede_goshmak"][detail.ln],
                     )
                   ],
                 ),
