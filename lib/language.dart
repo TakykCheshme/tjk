@@ -63,4 +63,8 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Hasap döretmek",
     "ru": "Регистрация",
   },
+  "sebede_goshmak": {
+    "tm": "Sebede goşmak",
+    "ru": "Добавить в корзину",
+  },
 };

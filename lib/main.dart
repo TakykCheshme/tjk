@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:tjk/const.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/appP.dart';
+import 'package:tjk/providers/cartP.dart';
 import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/providers/homeP.dart';
 import 'package:tjk/views/mainV.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AppP>(create: (context) => AppP()),
+        ChangeNotifierProvider<CartP>(create: (context) => CartP()),
         ChangeNotifierProxyProvider<AppP, FavoritesP>(
           create: (context) => FavoritesP(),
           update: (context, app, favorites) => favorites..tjkBox = app.tjkBox,

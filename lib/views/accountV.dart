@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:tjk/language.dart';
 import 'package:tjk/providers/appP.dart';
+import 'package:tjk/views/loginV.dart';
 
 import '../const.dart';
 
@@ -23,7 +24,9 @@ class AccountV extends StatelessWidget {
             children: [
               CupertinoButton.filled(
                 child: Text(LN["girmek"][app.ln]),
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).push(
+                  CupertinoPageRoute(builder: (_) => LoginV()),
+                ),
               ),
               Center(
                 child: Padding(

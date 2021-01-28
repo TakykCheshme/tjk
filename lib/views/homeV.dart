@@ -50,7 +50,7 @@ class HomeV extends StatelessWidget {
             Product product = category.products[index];
 
             return GestureDetector(
-              onTap: () => Navigator.of(context).push(
+              onTap: () => Navigator.of(context, rootNavigator: true).push(
                 CupertinoPageRoute(builder: (context) => DetailV(product)),
               ),
               child: Column(

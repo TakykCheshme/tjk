@@ -7,6 +7,7 @@ import 'package:tjk/const.dart';
 import 'package:tjk/language.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/appP.dart';
+import 'package:tjk/providers/cartP.dart';
 import 'package:tjk/providers/detailP.dart';
 import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/providers/homeP.dart';
@@ -35,24 +36,50 @@ class DetailV extends StatelessWidget {
           ),
           trailing: Icon(CupertinoIcons.cart, size: 28.0),
         ),
-        child: Consumer<DetailP>(
-          builder: (context, detail, child) => detail.loading
+        child: Consumer2<DetailP, CartP>(
+          builder: (context, detail, cart, child) => detail.loading
               ? CupertinoActivityIndicator()
-              : ListView(
+              : Stack(
                   children: [
-                    _buildCarouselSlider(detail),
-                    Divider(thickness: 1.0),
-                    _buildTitlePriceLike(context, product),
-                    Divider(thickness: 1.0),
-                    _buildSizes(detail),
-                    Divider(thickness: 1.0),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text(LN["menzesh_harytlar"][detail.ln],
-                          style: titleTS),
+                    Positioned.fill(
+                      child: ListView(
+                        children: [
+                          _buildCarouselSlider(detail),
+                          Divider(thickness: 1.0),
+                          _buildTitlePriceLike(context, product),
+                          Divider(thickness: 1.0),
+                          _buildSizes(detail),
+                          Divider(thickness: 1.0),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text(LN["menzesh_harytlar"][detail.ln],
+                                style: titleTS),
+                          ),
+                          _buildRelatedSlider(detail),
+                          SizedBox(height: 50.0),
+                        ],
+                      ),
                     ),
-                    _buildRelatedSlider(detail),
-                    SizedBox(height: 20.0),
+                    Positioned(
+                      bottom: 0.0,
+                      right: 0.0,
+                      left: 0.0,
+                      child: GestureDetector(
+                        onTap: () => cart.add(product, 1),
+                        child: Container(
+                          height: 70.0,
+                          width: double.infinity,
+                          color: primaryColor,
+                          child: Center(
+                            child: Text(LN["sebede_goshmak"][detail.ln],
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22.0,
+                                )),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
         ),
