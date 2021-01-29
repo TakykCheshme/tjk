@@ -3,6 +3,8 @@ import 'package:tjk/models/attribute.dart';
 import 'package:tjk/models/cart_item.dart';
 import 'package:tjk/models/product.dart';
 
+enum PaymentMethod { nagt, kart, online }
+
 class CartP extends ChangeNotifier {
   List<CartItem> _items = [];
   List<CartItem> get items => _items;
@@ -56,6 +58,13 @@ class CartP extends ChangeNotifier {
   void decreaseAt(int index) {
     _items[index].count = _items[index].count - 1;
     _calculateTotalPrice();
+    notifyListeners();
+  }
+
+  PaymentMethod _paymentMethod;
+  PaymentMethod get paymentMethod => _paymentMethod;
+  set paymentMethod(PaymentMethod paymentMethod) {
+    _paymentMethod = paymentMethod;
     notifyListeners();
   }
 }

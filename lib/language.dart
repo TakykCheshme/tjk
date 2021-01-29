@@ -111,4 +111,36 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Ýatda saklamak",
     "ru": "Сохранить",
   },
+  "sargydy_ugratmak": {
+    "tm": "Sargydy ugratmak",
+    "ru": "Отправить заказ",
+  },
+  "nagt": {
+    "tm": "Nagt",
+    "ru": "Наличными",
+  },
+  "nagt_subtitle": {
+    "tm": "Harytlar gowşurylanda nagt tölemek",
+    "ru": "Оплатить наличными при получении товаров",
+  },
+  "nagt_dal": {
+    "tm": "Nagt däl (plastik kart)",
+    "ru": "Безналичными (пластиковой картой)",
+  },
+  "nagt_dal_subtitle": {
+    "tm": "Harytlar gowşurylanda plastik kart arkaly tölemek",
+    "ru": "Отправить пластиковой картой при получении товаров",
+  },
+  "onlayn": {
+    "tm": "Onlaýn",
+    "ru": "Онлайн",
+  },
+  "onlayn_subtitle": {
+    "tm": "Internet arkaly tölemek",
+    "ru": "Оплатить через интернет",
+  },
+  "ugratmak": {
+    "tm": "Ugratmak",
+    "ru": "Отправить",
+  },
 };

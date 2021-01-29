@@ -10,6 +10,7 @@ import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/cartP.dart';
 import 'package:tjk/shared/bottom_button.dart';
 import 'package:tjk/shared/circle_button.dart';
+import 'package:tjk/views/checkoutV.dart';
 
 class CartV extends StatelessWidget {
   @override
@@ -113,7 +114,9 @@ class CartV extends StatelessWidget {
                   ),
                 ),
                 BottomButton(
-                  () {},
+                  () => Navigator.of(context).push(
+                    CupertinoPageRoute(builder: (context) => CheckoutV()),
+                  ),
                   LN["sargyt_etmek"][app.ln] +
                       " (${cart.totalPrice.toStringAsFixed(2)} man.)",
                 )

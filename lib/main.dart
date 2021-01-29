@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tjk/const.dart';
 import 'package:tjk/models/product.dart';
+import 'package:tjk/providers/accountP.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/cartP.dart';
 import 'package:tjk/providers/favoritesP.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AppP>(create: (context) => AppP()),
         ChangeNotifierProvider<CartP>(create: (context) => CartP()),
+        ChangeNotifierProvider<AccountP>(create: (context) => AccountP()),
         ChangeNotifierProxyProvider<AppP, FavoritesP>(
           create: (context) => FavoritesP(),
           update: (context, app, favorites) => favorites..tjkBox = app.tjkBox,
