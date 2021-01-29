@@ -18,4 +18,18 @@ String dashSlashRemover(String s) {
   return s.replaceAll(RegExp(r'-'), ' ').replaceAll(RegExp(r'/'), ' ');
 }
 
-Color primaryColor = Color(0xff346D95);
+const MaterialColor primaryColor = const MaterialColor(
+  0xff346D95,
+  const <int, Color>{
+    50: const Color(0xff346D95),
+    100: const Color(0xff346D95),
+    200: const Color(0xff346D95),
+    300: const Color(0xff346D95),
+    400: const Color(0xff346D95),
+    500: const Color(0xff346D95),
+    600: const Color(0xff346D95),
+    700: const Color(0xff346D95),
+    800: const Color(0xff346D95),
+    900: const Color(0xff346D95),
+  },
+);

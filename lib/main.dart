@@ -43,7 +43,10 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           brightness: Brightness.light,
-          primaryColor: primaryColor,
+          iconTheme: IconThemeData(
+            color: primaryColor,
+          ),
+          primarySwatch: primaryColor,
         ),
         home: MainV(),
       ),
