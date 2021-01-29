@@ -29,8 +29,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AppP>(create: (context) => AppP()),
-        ChangeNotifierProvider<CartP>(create: (context) => CartP()),
         ChangeNotifierProvider<AccountP>(create: (context) => AccountP()),
+        ChangeNotifierProxyProvider2<AppP, AccountP, CartP>(
+          create: (context) => CartP(),
+          update: (context, app, account, cart) => cart
+            ..ln = app.ln
+            ..account = account,
+        ),
         ChangeNotifierProxyProvider<AppP, FavoritesP>(
           create: (context) => FavoritesP(),
           update: (context, app, favorites) => favorites..tjkBox = app.tjkBox,

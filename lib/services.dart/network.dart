@@ -13,8 +13,8 @@ class Network {
     _dio = Dio();
     _dioCacheManager = DioCacheManager(CacheConfig());
     _dio.options.baseUrl = "https://tjk.com.tm/gala/tjk/customapi";
-    _dio.options.connectTimeout = 5000;
-    _dio.options.receiveTimeout = 3000;
+    // _dio.options.connectTimeout = 5000;
+    // _dio.options.receiveTimeout = 3000;
     _dio.interceptors.add(_dioCacheManager.interceptor);
     _cacheOptions = buildCacheOptions(Duration(days: 7));
   }
@@ -49,5 +49,31 @@ class Network {
       options: _cacheOptions,
     );
     return jsonDecode(response.data);
+  }
+
+  Future<int> orderCreate({
+    String language,
+    String address,
+    String phone,
+    double totalPaid,
+    String paymentMethod,
+    String orders,
+    String description,
+    String note,
+  }) async {
+    Response response = await _dio.post(
+      "/order_create.php",
+      data: {
+        "language": language,
+        "address": address,
+        "phone": phone,
+        "totalPaid": totalPaid,
+        "paymentMethod": paymentMethod,
+        "orders": orders,
+        "description": description,
+        "note": note,
+      },
+    );
+    return response.statusCode;
   }
 }

@@ -38,7 +38,7 @@ class Attribute {
       value: dashSlashRemover(json['value']),
       color: json['color'],
       name: json['name'],
-      idProductAttribute: json['idProductAttribute'],
+      idProductAttribute: json['id_product_attribute'],
     );
   }
 }

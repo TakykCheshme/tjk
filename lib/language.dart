@@ -143,4 +143,8 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Ugratmak",
     "ru": "Отправить",
   },
+  "toleg_usul_saylan": {
+    "tm": "Töleg usulyny saýlaň!",
+    "ru": "Выберите способ оплаты!",
+  },
 };

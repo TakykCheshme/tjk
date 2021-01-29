@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:tjk/const.dart';
 import 'package:tjk/language.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/appP.dart';

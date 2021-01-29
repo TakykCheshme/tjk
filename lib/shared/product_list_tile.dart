@@ -14,7 +14,7 @@ class ProductListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => Navigator.of(context).push(
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
         CupertinoPageRoute(
           builder: (context) => DetailV(product),
         ),

@@ -69,7 +69,36 @@ class CheckoutV extends StatelessWidget {
                   ],
                 ),
               ),
-              BottomButton(() {}, "Ugratmak")
+              BottomButton(() {
+                if (cart.paymentMethod == null)
+                  showDialog(
+                    context: context,
+                    builder: (context) => CupertinoAlertDialog(
+                      title: Text(LN["toleg_usul_saylan"][app.ln]),
+                      actions: [
+                        CupertinoDialogAction(
+                          child: Text("OK"),
+                          onPressed: () => Navigator.of(context).pop(),
+                        )
+                      ],
+                    ),
+                  );
+                else if (cart.totalPrice == 0.0)
+                  showDialog(
+                    context: context,
+                    builder: (context) => CupertinoAlertDialog(
+                      title: Text(LN["toleg_usul_saylan"][app.ln]),
+                      actions: [
+                        CupertinoDialogAction(
+                          child: Text("OK"),
+                          onPressed: () => Navigator.of(context).pop(),
+                        )
+                      ],
+                    ),
+                  );
+                else
+                  cart.checkout();
+              }, "Ugratmak")
             ],
           ),
         ),
