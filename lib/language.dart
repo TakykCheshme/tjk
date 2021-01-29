@@ -91,4 +91,24 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Goşmak",
     "ru": "Добавить",
   },
+  "at_we_familiya": {
+    "tm": "At we familiýa: ",
+    "ru": "Имя и фамилия: ",
+  },
+  "salgy": {
+    "tm": "Öý salgy: ",
+    "ru": "Адрес: ",
+  },
+  "telefon": {
+    "tm": "Telefon: ",
+    "ru": "Телефон: ",
+  },
+  "uytgetmek": {
+    "tm": "Üýtgetmek",
+    "ru": "Изменить",
+  },
+  "yatda_saklamak": {
+    "tm": "Ýatda saklamak",
+    "ru": "Сохранить",
+  },
 };

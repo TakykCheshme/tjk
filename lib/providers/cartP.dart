@@ -7,7 +7,7 @@ class CartP extends ChangeNotifier {
   List<CartItem> _items = [];
   List<CartItem> get items => _items;
 
-  double _totalPrice;
+  double _totalPrice = 0;
   double get totalPrice => _totalPrice;
 
   void _calculateTotalPrice() {
