@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:tjk/models/attribute.dart';
+
 import 'product.dart';
 
 class CartItem {
@@ -11,12 +14,18 @@ class CartItem {
     _count = count;
   }
 
-  String size;
+  Attribute attribute;
 
-  CartItem(Product product, this.size, int count) {
+  CartItem({
+    @required Product product,
+    @required this.attribute,
+    @required int count,
+  }) {
     _product = product;
     _count = count;
   }
 
-  bool operator ==(o) => _product == o.product && size == o.size;
+  bool operator ==(o) =>
+      _product == o.product &&
+      attribute.idProductAttribute == o.attribute.idProductAttribute;
 }

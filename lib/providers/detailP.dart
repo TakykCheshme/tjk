@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tjk/const.dart';
+import 'package:tjk/models/attribute.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/services.dart/network.dart';
 
@@ -15,11 +16,11 @@ class DetailP extends ChangeNotifier {
   }
 
   List<String> _images;
-  List<String> _attributes;
+  List<Attribute> _attributes;
   List<Product> _related;
 
   List<String> get images => _images;
-  List<String> get attributes => _attributes;
+  List<Attribute> get attributes => _attributes;
   List<Product> get related => _related;
 
   DetailP({int id, int categoryId}) {
@@ -28,8 +29,7 @@ class DetailP extends ChangeNotifier {
           .map<String>((image) => getCoverById(image["id"]))
           .toList();
       _attributes = product["attributes"]
-          .map<String>(
-              (attribute) => dashSlashRemover(attribute["value"].toString()))
+          .map<Attribute>((attribute) => Attribute.fromJson(attribute))
           .toList();
       _related = product["related"]
           .map<Product>((json) => Product.fromJson(json))

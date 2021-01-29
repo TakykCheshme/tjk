@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tjk/models/attribute.dart';
 import 'package:tjk/models/cart_item.dart';
 import 'package:tjk/models/product.dart';
 
@@ -15,8 +16,16 @@ class CartP extends ChangeNotifier {
       _totalPrice += item.product.price * item.count;
   }
 
-  void add({Product product, String size = "", int count = 1}) {
-    CartItem item = CartItem(product, size, count);
+  void add({
+    @required Product product,
+    @required Attribute attribute,
+    @required int count,
+  }) {
+    CartItem item = CartItem(
+      product: product,
+      attribute: attribute,
+      count: count,
+    );
     if (!_items.contains(item))
       _items.add(item);
     else

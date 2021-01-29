@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tjk/const.dart';
 import 'package:tjk/language.dart';
+import 'package:tjk/models/attribute.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/cartP.dart';
@@ -58,13 +59,13 @@ class DetailV extends StatelessWidget {
                       Builder(
                         builder: (contex) => BottomButton(
                           () {
+                            Attribute attibute =
+                                detail.attributes[detail.selectedAttribute];
                             showDialog(
                               context: context,
                               builder: (_) => CupertinoAlertDialog(
                                 title: Text(
-                                  LN["olcheg"][detail.ln] +
-                                      detail
-                                          .attributes[detail.selectedAttribute],
+                                  LN["olcheg"][detail.ln] + attibute.value,
                                 ),
                                 actions: [
                                   CupertinoDialogAction(
@@ -77,8 +78,7 @@ class DetailV extends StatelessWidget {
                                     onPressed: () {
                                       cart.add(
                                         product: product,
-                                        size: detail.attributes[
-                                            detail.selectedAttribute],
+                                        attribute: attibute,
                                         count: 1,
                                       );
                                       Navigator.of(context).pop();
@@ -173,7 +173,7 @@ class DetailV extends StatelessWidget {
             children: {
               for (int i = 0; i < detail.attributes.length; i++)
                 i: Text(
-                  detail.attributes[i],
+                  detail.attributes[i].value,
                   style: TextStyle(
                     color: i == detail.selectedAttribute
                         ? Colors.white

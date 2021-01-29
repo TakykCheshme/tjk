@@ -72,7 +72,7 @@ class CartV extends StatelessWidget {
                               ),
                               SizedBox(height: 5.0),
                               Text(
-                                LN["olcheg"][app.ln] + item.size,
+                                LN["olcheg"][app.ln] + item.attribute.value,
                               ),
                               SizedBox(height: 10.0),
                               Row(
