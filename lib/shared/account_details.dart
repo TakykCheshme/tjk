@@ -7,13 +7,34 @@ import 'package:tjk/providers/appP.dart';
 import '../const.dart';
 import '../language.dart';
 
-class AccountDetails extends StatelessWidget {
+class AccountDetails extends StatefulWidget {
+  @override
+  _AccountDetailsState createState() => _AccountDetailsState();
+}
+
+class _AccountDetailsState extends State<AccountDetails> {
+  TextEditingController _nameController;
+  TextEditingController _addressController;
+  TextEditingController _phoneController;
+
+  @override
+  initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    _addressController = TextEditingController();
+    _phoneController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _nameController.dispose();
+    _addressController.dispose();
+    _phoneController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController _nameController = TextEditingController();
-    TextEditingController _addressController = TextEditingController();
-    TextEditingController _phoneController = TextEditingController();
-
     return Consumer2<AppP, AccountP>(
       builder: (context, app, account, child) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -26,6 +26,7 @@ class BottomButton extends StatelessWidget {
               label,
               style: TextStyle(
                 color: Colors.white,
+                fontWeight: FontWeight.w600,
                 fontSize: 22.0,
               ),
             ),

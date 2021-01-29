@@ -14,7 +14,10 @@ class AccountV extends StatelessWidget {
         body: CupertinoPageScaffold(
           navigationBar: TJKNavigationBar(LN["hasabym"][app.ln]),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 120.0,
+            ),
             child: AccountDetails(),
           ),
         ),
