@@ -112,7 +112,7 @@ class CartP extends ChangeNotifier {
           description: description,
           note: jsonEncode(note),
         )
-        .then((result) => print(result.toString()));
+        .then((result) => result);
   }
 
   String _ln;

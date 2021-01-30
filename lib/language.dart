@@ -147,6 +147,10 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Töleg usulyny saýlaň!",
     "ru": "Выберите способ оплаты!",
   },
+  "name_address_phone_empty": {
+    "tm": "Adyňyz, salgyňyz we telefon belgiňiz hökman doldurylmalydyr!",
+    "ru": "Вводить имя, адрес и номер телефона обязательно",
+  },
   "internet_birikmanizi_barlan": {
     "tm": "Internet birikmäni barlaň we täzeden synanyşyp görüň",
     "ru": "Проверьте интернет соединение и попытайтесь заново",

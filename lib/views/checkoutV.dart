@@ -6,10 +6,35 @@ import 'package:tjk/language.dart';
 import 'package:tjk/providers/accountP.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/cartP.dart';
-import 'package:tjk/shared/account_details.dart';
 import 'package:tjk/shared/bottom_button.dart';
 
-class CheckoutV extends StatelessWidget {
+class CheckoutV extends StatefulWidget {
+  @override
+  _CheckoutVState createState() => _CheckoutVState();
+}
+
+class _CheckoutVState extends State<CheckoutV> {
+  TextEditingController _nameController;
+  TextEditingController _addressController;
+  TextEditingController _phoneController;
+
+  @override
+  void initState() {
+    super.initState();
+    AccountP account = Provider.of<AccountP>(context, listen: false);
+    _nameController = TextEditingController(text: account.name);
+    _addressController = TextEditingController(text: account.address);
+    _phoneController = TextEditingController(text: account.phone);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _nameController.dispose();
+    _addressController.dispose();
+    _phoneController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer3<AppP, CartP, AccountP>(
@@ -25,7 +50,32 @@ class CheckoutV extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(20.0, 100.0, 20.0, 80.0),
                   children: [
                     SizedBox(height: 10.0),
-                    AccountDetails(),
+                    // AccountDetails(),
+                    Text(LN["at_we_familiya"][app.ln], style: titleTS),
+                    SizedBox(height: 5.0),
+                    CupertinoTextField(
+                      controller: _nameController,
+                      style: title28TS.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      onChanged: (text) => account.name = text,
+                    ),
+                    SizedBox(height: 20.0),
+                    Text(LN["salgy"][app.ln], style: titleTS),
+                    SizedBox(height: 5.0),
+                    CupertinoTextField(
+                      controller: _addressController,
+                      style: title28TS.copyWith(fontWeight: FontWeight.bold),
+                      onChanged: (text) => account.address = text,
+                    ),
+                    SizedBox(height: 20.0),
+                    Text(LN["telefon"][app.ln], style: titleTS),
+                    SizedBox(height: 5.0),
+                    CupertinoTextField(
+                      controller: _phoneController,
+                      style: title28TS.copyWith(fontWeight: FontWeight.bold),
+                      onChanged: (text) => account.phone = text,
+                    ),
                     SizedBox(height: 40.0),
                     Text("Toleg usuly:", style: titleTS),
                     SizedBox(height: 5.0),
@@ -69,36 +119,41 @@ class CheckoutV extends StatelessWidget {
                   ],
                 ),
               ),
-              BottomButton(() {
-                if (cart.paymentMethod == null)
-                  showDialog(
-                    context: context,
-                    builder: (context) => CupertinoAlertDialog(
-                      title: Text(LN["toleg_usul_saylan"][app.ln]),
-                      actions: [
-                        CupertinoDialogAction(
-                          child: Text("OK"),
-                          onPressed: () => Navigator.of(context).pop(),
-                        )
-                      ],
-                    ),
-                  );
-                else if (cart.totalPrice == 0.0)
-                  showDialog(
-                    context: context,
-                    builder: (context) => CupertinoAlertDialog(
-                      title: Text(LN["toleg_usul_saylan"][app.ln]),
-                      actions: [
-                        CupertinoDialogAction(
-                          child: Text("OK"),
-                          onPressed: () => Navigator.of(context).pop(),
-                        )
-                      ],
-                    ),
-                  );
-                else
-                  cart.checkout();
-              }, "Ugratmak")
+              BottomButton(
+                () {
+                  if (account.name.isEmpty ||
+                      account.address.isEmpty ||
+                      account.phone.isEmpty)
+                    showDialog(
+                      context: context,
+                      builder: (context) => CupertinoAlertDialog(
+                        title: Text(LN["name_address_phone_empty"][app.ln]),
+                        actions: [
+                          CupertinoDialogAction(
+                            child: Text("OK"),
+                            onPressed: () => Navigator.of(context).pop(),
+                          )
+                        ],
+                      ),
+                    );
+                  else if (cart.paymentMethod == null)
+                    showDialog(
+                      context: context,
+                      builder: (context) => CupertinoAlertDialog(
+                        title: Text(LN["toleg_usul_saylan"][app.ln]),
+                        actions: [
+                          CupertinoDialogAction(
+                            child: Text("OK"),
+                            onPressed: () => Navigator.of(context).pop(),
+                          )
+                        ],
+                      ),
+                    );
+                  else
+                    cart.checkout();
+                },
+                "Ugratmak",
+              )
             ],
           ),
         ),

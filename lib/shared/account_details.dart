@@ -48,6 +48,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                     style: title28TS.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
+                    onChanged: (text) => account.name = text,
                   )
                 : Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -64,6 +65,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                 ? CupertinoTextField(
                     controller: _addressController,
                     style: title28TS.copyWith(fontWeight: FontWeight.bold),
+                    onChanged: (text) => account.address = text,
                   )
                 : Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -80,6 +82,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                 ? CupertinoTextField(
                     controller: _phoneController,
                     style: title28TS.copyWith(fontWeight: FontWeight.bold),
+                    onChanged: (text) => account.phone = text,
                   )
                 : Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6.0),
