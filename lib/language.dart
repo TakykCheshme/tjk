@@ -147,4 +147,8 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Töleg usulyny saýlaň!",
     "ru": "Выберите способ оплаты!",
   },
+  "internet_birikmanizi_barlan": {
+    "tm": "Internet birikmäni barlaň we täzeden synanyşyp görüň",
+    "ru": "Проверьте интернет соединение и попытайтесь заново",
+  },
 };

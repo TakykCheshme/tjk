@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/services.dart/network.dart';
 
+import '../language.dart';
+
 class SearchP extends ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
+
+  String _error;
+  String get error => _error;
 
   List<Product> products;
 
@@ -12,13 +17,15 @@ class SearchP extends ChangeNotifier {
     _loading = true;
     notifyListeners();
 
-    print("word = $word");
-    print("ln = $_ln");
-
     Network().getSearch(word, _ln).then((data) {
-      products = data["products"]
-          .map<Product>((json) => Product.fromJson(json))
-          .toList();
+      if (data == null)
+        _error = LN["internet_birikmanizi_barlan"][_ln];
+      else {
+        _error = null;
+        products = data["products"]
+            .map<Product>((json) => Product.fromJson(json))
+            .toList();
+      }
 
       _loading = false;
       notifyListeners();

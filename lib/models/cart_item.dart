@@ -10,7 +10,7 @@ class CartItem {
   int _count;
   int get count => _count;
   set count(int count) {
-    if (count < 0) count = 0;
+    if (count < 1) count = 1;
     _count = count;
   }
 

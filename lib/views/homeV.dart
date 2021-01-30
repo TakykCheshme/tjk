@@ -8,6 +8,7 @@ import 'package:tjk/models/category.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/providers/homeP.dart';
+import 'package:tjk/shared/error_message.dart';
 import 'package:tjk/shared/tjk_nvigation_bar.dart';
 import 'package:tjk/views/detailV.dart';
 
@@ -19,14 +20,16 @@ class HomeV extends StatelessWidget {
         navigationBar: TJKNavigationBar("Türkmenbaşy jins toplumy"),
         child: Consumer2<HomeP, FavoritesP>(
           builder: (context, home, favorites, child) => home.loading
-              ? CupertinoActivityIndicator()
-              : ListView(
-                  children: [
-                    _buildCarouselSlider(home),
-                    _buildCupertinoSegmentedControl(home),
-                    _buildProductsGridView(home, favorites)
-                  ],
-                ),
+              ? Center(child: CupertinoActivityIndicator())
+              : home.error != null
+                  ? ErrorMessage(home.load)
+                  : ListView(
+                      children: [
+                        _buildCarouselSlider(home),
+                        _buildCupertinoSegmentedControl(home),
+                        _buildProductsGridView(home, favorites)
+                      ],
+                    ),
         ),
       ),
     );

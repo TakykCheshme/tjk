@@ -11,6 +11,7 @@ import 'package:tjk/providers/cartP.dart';
 import 'package:tjk/shared/bottom_button.dart';
 import 'package:tjk/shared/circle_button.dart';
 import 'package:tjk/views/checkoutV.dart';
+import 'package:tjk/views/detailV.dart';
 
 class CartV extends StatelessWidget {
   @override
@@ -40,72 +41,78 @@ class CartV extends StatelessWidget {
                     itemBuilder: (context, index) {
                       CartItem item = cart.items[index];
                       Product product = item.product;
-                      return Row(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20.0),
-                              child: CachedNetworkImage(
-                                width: 120.0,
-                                height: 120.0,
-                                fit: BoxFit.cover,
-                                imageUrl: product.cover,
-                                placeholder: (_, __) =>
-                                    CupertinoActivityIndicator(),
+                      return GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                          CupertinoPageRoute(
+                              builder: (context) => DetailV(product)),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: CachedNetworkImage(
+                                  width: 120.0,
+                                  height: 120.0,
+                                  fit: BoxFit.cover,
+                                  imageUrl: product.cover,
+                                  placeholder: (_, __) =>
+                                      CupertinoActivityIndicator(),
+                                ),
                               ),
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                product.name,
-                                style: titleTS.copyWith(
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(height: 5.0),
-                              Text(
-                                LN["baha"][app.ln] +
-                                    product.price.toStringAsFixed(2) +
-                                    " m.",
-                              ),
-                              SizedBox(height: 5.0),
-                              Text(
-                                LN["olcheg"][app.ln] + item.attribute.value,
-                              ),
-                              SizedBox(height: 10.0),
-                              Row(
-                                children: [
-                                  CircleButton(
-                                      "-", () => cart.decreaseAt(index)),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    width: 40.0,
-                                    child: Text(
-                                      item.count.toString(),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16.0,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  product.name,
+                                  style: titleTS.copyWith(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(height: 5.0),
+                                Text(
+                                  LN["baha"][app.ln] +
+                                      product.price.toStringAsFixed(2) +
+                                      " m.",
+                                ),
+                                SizedBox(height: 5.0),
+                                Text(
+                                  LN["olcheg"][app.ln] + item.attribute.value,
+                                ),
+                                SizedBox(height: 10.0),
+                                Row(
+                                  children: [
+                                    CircleButton(
+                                        "-", () => cart.decreaseAt(index)),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: 40.0,
+                                      child: Text(
+                                        item.count.toString(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  CircleButton(
-                                      "+", () => cart.increaseAt(index)),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          GestureDetector(
-                            onTap: () => cart.removeAt(index),
-                            child: Padding(
-                              padding: const EdgeInsets.all(14.0),
-                              child: Icon(CupertinoIcons.delete),
+                                    CircleButton(
+                                        "+", () => cart.increaseAt(index)),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () => cart.removeAt(index),
+                              child: Padding(
+                                padding: const EdgeInsets.all(14.0),
+                                child: Icon(CupertinoIcons.delete),
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                     },
                     separatorBuilder: (context, index) =>
@@ -113,13 +120,15 @@ class CartV extends StatelessWidget {
                     itemCount: cart.items.length,
                   ),
                 ),
-                BottomButton(
-                  () => Navigator.of(context).push(
-                    CupertinoPageRoute(builder: (context) => CheckoutV()),
-                  ),
-                  LN["sargyt_etmek"][app.ln] +
-                      " (${cart.totalPrice.toStringAsFixed(2)} man.)",
-                )
+                cart.totalPrice > 0
+                    ? BottomButton(
+                        () => Navigator.of(context).push(
+                          CupertinoPageRoute(builder: (context) => CheckoutV()),
+                        ),
+                        LN["sargyt_etmek"][app.ln] +
+                            " (${cart.totalPrice.toStringAsFixed(2)} man.)",
+                      )
+                    : Container(),
               ],
             ),
           ),

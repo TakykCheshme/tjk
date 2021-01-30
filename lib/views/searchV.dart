@@ -5,6 +5,7 @@ import 'package:tjk/language.dart';
 import 'package:tjk/models/product.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/searchP.dart';
+import 'package:tjk/shared/error_message.dart';
 import 'package:tjk/shared/product_list_tile.dart';
 import 'package:tjk/shared/tjk_nvigation_bar.dart';
 
@@ -30,7 +31,13 @@ class SearchV extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20.0),
                         child: CupertinoActivityIndicator(),
                       )
-                    : _buildProductList(search)
+                    : search.error != null
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 30.0),
+                            child: ErrorMessage(
+                                () => search.search(_controller.text)),
+                          )
+                        : _buildProductList(search)
               ],
             ),
           ),

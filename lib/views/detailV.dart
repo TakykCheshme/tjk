@@ -13,6 +13,7 @@ import 'package:tjk/providers/detailP.dart';
 import 'package:tjk/providers/favoritesP.dart';
 import 'package:tjk/providers/homeP.dart';
 import 'package:tjk/shared/bottom_button.dart';
+import 'package:tjk/shared/error_message.dart';
 import 'package:tjk/shared/tjk_nvigation_bar.dart';
 
 class DetailV extends StatelessWidget {
@@ -34,66 +35,71 @@ class DetailV extends StatelessWidget {
           navigationBar: TJKNavigationBar(product.name),
           child: Consumer2<DetailP, CartP>(
             builder: (_, detail, cart, child) => detail.loading
-                ? CupertinoActivityIndicator()
-                : Stack(
-                    children: [
-                      Positioned.fill(
-                        child: ListView(
-                          children: [
-                            _buildCarouselSlider(detail),
-                            Divider(thickness: 1.0),
-                            _buildTitlePriceLike(context, product),
-                            Divider(thickness: 1.0),
-                            _buildSizes(detail),
-                            Divider(thickness: 1.0),
-                            Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Text(LN["menzesh_harytlar"][detail.ln],
-                                  style: titleTS),
-                            ),
-                            _buildRelatedSlider(detail),
-                            SizedBox(height: 50.0),
-                          ],
-                        ),
-                      ),
-                      Builder(
-                        builder: (contex) => BottomButton(
-                          () {
-                            Attribute attibute =
-                                detail.attributes[detail.selectedAttribute];
-                            showDialog(
-                              context: context,
-                              builder: (_) => CupertinoAlertDialog(
-                                title: Text(
-                                  LN["olcheg"][detail.ln] + attibute.value,
+                ? Center(child: CupertinoActivityIndicator())
+                : detail.error != null
+                    ? ErrorMessage(() => detail.load(
+                          product.id,
+                          home.categories[home.selectedCategory].id,
+                        ))
+                    : Stack(
+                        children: [
+                          Positioned.fill(
+                            child: ListView(
+                              children: [
+                                _buildCarouselSlider(detail),
+                                Divider(thickness: 1.0),
+                                _buildTitlePriceLike(context, product),
+                                Divider(thickness: 1.0),
+                                _buildSizes(detail),
+                                Divider(thickness: 1.0),
+                                Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Text(LN["menzesh_harytlar"][detail.ln],
+                                      style: titleTS),
                                 ),
-                                actions: [
-                                  CupertinoDialogAction(
-                                    child: Text(LN["yapmak"][detail.ln]),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
+                                _buildRelatedSlider(detail),
+                                SizedBox(height: 50.0),
+                              ],
+                            ),
+                          ),
+                          Builder(
+                            builder: (contex) => BottomButton(
+                              () {
+                                Attribute attibute =
+                                    detail.attributes[detail.selectedAttribute];
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => CupertinoAlertDialog(
+                                    title: Text(
+                                      LN["olcheg"][detail.ln] + attibute.value,
+                                    ),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(LN["yapmak"][detail.ln]),
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                      ),
+                                      CupertinoDialogAction(
+                                        isDefaultAction: true,
+                                        onPressed: () {
+                                          cart.add(
+                                            product: product,
+                                            attribute: attibute,
+                                            count: 1,
+                                          );
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(LN["goshmak"][detail.ln]),
+                                      ),
+                                    ],
                                   ),
-                                  CupertinoDialogAction(
-                                    isDefaultAction: true,
-                                    onPressed: () {
-                                      cart.add(
-                                        product: product,
-                                        attribute: attibute,
-                                        count: 1,
-                                      );
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(LN["goshmak"][detail.ln]),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          LN["sebede_goshmak"][detail.ln],
-                        ),
-                      )
-                    ],
-                  ),
+                                );
+                              },
+                              LN["sebede_goshmak"][detail.ln],
+                            ),
+                          )
+                        ],
+                      ),
           ),
         ),
       ),
