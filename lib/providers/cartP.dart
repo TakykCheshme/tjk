@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:tjk/language.dart';
 import 'package:tjk/models/attribute.dart';
 import 'package:tjk/models/cart_item.dart';
 import 'package:tjk/models/product.dart';
@@ -12,6 +13,12 @@ enum PaymentMethod { nagt, kart, online }
 
 class CartP extends ChangeNotifier {
   Box box;
+
+  bool _loading = false;
+  bool get loading => _loading;
+
+  String _error;
+  String get error => _error;
 
   List<CartItem> _items = [];
   List<CartItem> get items => _items;
@@ -75,7 +82,10 @@ class CartP extends ChangeNotifier {
     notifyListeners();
   }
 
-  void checkout() {
+  Future<int> checkout() async {
+    _loading = true;
+    notifyListeners();
+
     List<Map<String, dynamic>> orders = _items
         .map<Map<String, dynamic>>((item) => {
               "id": item.product.id,
@@ -101,18 +111,26 @@ class CartP extends ChangeNotifier {
             })
         .toList();
 
-    Network()
-        .orderCreate(
-          language: _ln,
-          address: "Ady: " + account.name + ", Salgysy: " + account.address,
-          phone: account.phone,
-          totalPaid: _totalPrice,
-          paymentMethod: _paymentMethod.toString().split(".").last,
-          orders: jsonEncode(orders),
-          description: description,
-          note: jsonEncode(note),
-        )
-        .then((result) => result);
+    int result = await Network().orderCreate(
+      language: _ln,
+      address: "Ady: " + account.name + ", Salgysy: " + account.address,
+      phone: account.phone,
+      totalPaid: _totalPrice,
+      paymentMethod: _paymentMethod.toString().split(".").last,
+      orders: jsonEncode(orders),
+      description: description,
+      note: jsonEncode(note),
+    );
+    _loading = false;
+    if (result == null) {
+      _error = "no internet";
+      notifyListeners();
+      return 0;
+    } else {
+      _error = null;
+      notifyListeners();
+      return result;
+    }
   }
 
   String _ln;

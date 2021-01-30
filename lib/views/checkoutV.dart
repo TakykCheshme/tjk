@@ -7,6 +7,8 @@ import 'package:tjk/providers/accountP.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/providers/cartP.dart';
 import 'package:tjk/shared/bottom_button.dart';
+import 'package:tjk/shared/error_message.dart';
+import 'package:tjk/views/mainV.dart';
 
 class CheckoutV extends StatefulWidget {
   @override
@@ -43,119 +45,159 @@ class _CheckoutVState extends State<CheckoutV> {
           middle: Text(LN["sargydy_ugratmak"][app.ln], style: titleTS),
         ),
         child: Scaffold(
-          body: Stack(
-            children: [
-              Positioned.fill(
-                child: ListView(
-                  padding: EdgeInsets.fromLTRB(20.0, 100.0, 20.0, 80.0),
-                  children: [
-                    SizedBox(height: 10.0),
-                    // AccountDetails(),
-                    Text(LN["at_we_familiya"][app.ln], style: titleTS),
-                    SizedBox(height: 5.0),
-                    CupertinoTextField(
-                      controller: _nameController,
-                      style: title28TS.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      onChanged: (text) => account.name = text,
+          body: cart.loading
+              ? Center(child: CupertinoActivityIndicator())
+              : cart.error != null
+                  ? ErrorMessage(cart.checkout)
+                  : Stack(
+                      children: [
+                        Positioned.fill(
+                          child: ListView(
+                            padding:
+                                EdgeInsets.fromLTRB(20.0, 100.0, 20.0, 80.0),
+                            children: [
+                              SizedBox(height: 10.0),
+                              // AccountDetails(),
+                              Text(LN["at_we_familiya"][app.ln],
+                                  style: titleTS),
+                              SizedBox(height: 5.0),
+                              CupertinoTextField(
+                                controller: _nameController,
+                                style: title28TS.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                onChanged: (text) => account.name = text,
+                              ),
+                              SizedBox(height: 20.0),
+                              Text(LN["salgy"][app.ln], style: titleTS),
+                              SizedBox(height: 5.0),
+                              CupertinoTextField(
+                                controller: _addressController,
+                                style: title28TS.copyWith(
+                                    fontWeight: FontWeight.bold),
+                                onChanged: (text) => account.address = text,
+                              ),
+                              SizedBox(height: 20.0),
+                              Text(LN["telefon"][app.ln], style: titleTS),
+                              SizedBox(height: 5.0),
+                              CupertinoTextField(
+                                controller: _phoneController,
+                                style: title28TS.copyWith(
+                                    fontWeight: FontWeight.bold),
+                                onChanged: (text) => account.phone = text,
+                              ),
+                              SizedBox(height: 40.0),
+                              Text("Toleg usuly:", style: titleTS),
+                              SizedBox(height: 5.0),
+                              RadioListTile(
+                                value: PaymentMethod.nagt,
+                                groupValue: cart.paymentMethod,
+                                onChanged: (val) => cart.paymentMethod = val,
+                                title: Text(
+                                  LN["nagt"][app.ln],
+                                  style: titleTS.copyWith(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(LN["nagt_subtitle"][app.ln]),
+                              ),
+                              RadioListTile(
+                                value: PaymentMethod.kart,
+                                groupValue: cart.paymentMethod,
+                                onChanged: (val) => cart.paymentMethod = val,
+                                title: Text(
+                                  LN["nagt_dal"][app.ln],
+                                  style: titleTS.copyWith(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(LN["nagt_dal_subtitle"][app.ln]),
+                              ),
+                              RadioListTile(
+                                value: PaymentMethod.online,
+                                groupValue: cart.paymentMethod,
+                                onChanged: (val) => cart.paymentMethod = val,
+                                title: Text(
+                                  LN["onlayn"][app.ln],
+                                  style: titleTS.copyWith(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(LN["onlayn_subtitle"][app.ln]),
+                              ),
+                              SizedBox(height: 10.0),
+                              Text("Jemi:", style: titleTS),
+                              SizedBox(height: 5.0),
+                              Text(
+                                cart.totalPrice.toStringAsFixed(2) + " manat",
+                                style: title28TS.copyWith(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                        BottomButton(
+                          () {
+                            if (account.name.isEmpty ||
+                                account.address.isEmpty ||
+                                account.phone.isEmpty)
+                              showDialog(
+                                context: context,
+                                builder: (context) => CupertinoAlertDialog(
+                                  title: Text(
+                                      LN["name_address_phone_empty"][app.ln]),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      child: Text("OK"),
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                    )
+                                  ],
+                                ),
+                              );
+                            else if (cart.paymentMethod == null)
+                              showDialog(
+                                context: context,
+                                builder: (context) => CupertinoAlertDialog(
+                                  title: Text(LN["toleg_usul_saylan"][app.ln]),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      child: Text("OK"),
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                    )
+                                  ],
+                                ),
+                              );
+                            else
+                              cart.checkout().then((result) {
+                                if (result == 200)
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => CupertinoAlertDialog(
+                                            title: Text(
+                                                LN["sargydynyz_ugradyldy"]
+                                                    [cart.ln]),
+                                            actions: [
+                                              CupertinoDialogAction(
+                                                child: Text("OK"),
+                                                onPressed: () {
+                                                  cart.clear();
+
+                                                  Navigator.of(context)
+                                                      .pushAndRemoveUntil(
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) =>
+                                                                      MainV()),
+                                                          (route) => false);
+                                                },
+                                              )
+                                            ],
+                                          ));
+                              });
+                          },
+                          "Ugratmak",
+                        )
+                      ],
                     ),
-                    SizedBox(height: 20.0),
-                    Text(LN["salgy"][app.ln], style: titleTS),
-                    SizedBox(height: 5.0),
-                    CupertinoTextField(
-                      controller: _addressController,
-                      style: title28TS.copyWith(fontWeight: FontWeight.bold),
-                      onChanged: (text) => account.address = text,
-                    ),
-                    SizedBox(height: 20.0),
-                    Text(LN["telefon"][app.ln], style: titleTS),
-                    SizedBox(height: 5.0),
-                    CupertinoTextField(
-                      controller: _phoneController,
-                      style: title28TS.copyWith(fontWeight: FontWeight.bold),
-                      onChanged: (text) => account.phone = text,
-                    ),
-                    SizedBox(height: 40.0),
-                    Text("Toleg usuly:", style: titleTS),
-                    SizedBox(height: 5.0),
-                    RadioListTile(
-                      value: PaymentMethod.nagt,
-                      groupValue: cart.paymentMethod,
-                      onChanged: (val) => cart.paymentMethod = val,
-                      title: Text(
-                        LN["nagt"][app.ln],
-                        style: titleTS.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(LN["nagt_subtitle"][app.ln]),
-                    ),
-                    RadioListTile(
-                      value: PaymentMethod.kart,
-                      groupValue: cart.paymentMethod,
-                      onChanged: (val) => cart.paymentMethod = val,
-                      title: Text(
-                        LN["nagt_dal"][app.ln],
-                        style: titleTS.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(LN["nagt_dal_subtitle"][app.ln]),
-                    ),
-                    RadioListTile(
-                      value: PaymentMethod.online,
-                      groupValue: cart.paymentMethod,
-                      onChanged: (val) => cart.paymentMethod = val,
-                      title: Text(
-                        LN["onlayn"][app.ln],
-                        style: titleTS.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(LN["onlayn_subtitle"][app.ln]),
-                    ),
-                    SizedBox(height: 10.0),
-                    Text("Jemi:", style: titleTS),
-                    SizedBox(height: 5.0),
-                    Text(
-                      cart.totalPrice.toStringAsFixed(2) + " manat",
-                      style: title28TS.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              BottomButton(
-                () {
-                  if (account.name.isEmpty ||
-                      account.address.isEmpty ||
-                      account.phone.isEmpty)
-                    showDialog(
-                      context: context,
-                      builder: (context) => CupertinoAlertDialog(
-                        title: Text(LN["name_address_phone_empty"][app.ln]),
-                        actions: [
-                          CupertinoDialogAction(
-                            child: Text("OK"),
-                            onPressed: () => Navigator.of(context).pop(),
-                          )
-                        ],
-                      ),
-                    );
-                  else if (cart.paymentMethod == null)
-                    showDialog(
-                      context: context,
-                      builder: (context) => CupertinoAlertDialog(
-                        title: Text(LN["toleg_usul_saylan"][app.ln]),
-                        actions: [
-                          CupertinoDialogAction(
-                            child: Text("OK"),
-                            onPressed: () => Navigator.of(context).pop(),
-                          )
-                        ],
-                      ),
-                    );
-                  else
-                    cart.checkout();
-                },
-                "Ugratmak",
-              )
-            ],
-          ),
         ),
       ),
     );

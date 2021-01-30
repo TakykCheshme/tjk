@@ -247,10 +247,10 @@ class DetailV extends StatelessWidget {
         placeholder: (_, __) => CupertinoActivityIndicator(),
       ),
       options: CarouselOptions(
-        autoPlay: true,
+        autoPlay: false,
         aspectRatio: 1.0,
         enlargeCenterPage: true,
-        viewportFraction: .8,
+        viewportFraction: .7,
       ),
     );
   }

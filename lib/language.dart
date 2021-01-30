@@ -155,4 +155,8 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Internet birikmäni barlaň we täzeden synanyşyp görüň",
     "ru": "Проверьте интернет соединение и попытайтесь заново",
   },
+  "sargydynyz_ugradyldy": {
+    "tm": "Sargydyňyz üstünlikli ugradyldy",
+    "ru": "Заказ успешно отправлен",
+  },
 };

@@ -20,16 +20,18 @@ class CartV extends StatelessWidget {
       builder: (context, app, cart, child) => CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           middle: Text(LN["sebet"][app.ln], style: titleTS),
-          trailing: GestureDetector(
-            onTap: cart.clear,
-            child: Text(
-              LN["arassala"][app.ln],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: primaryColor,
-              ),
-            ),
-          ),
+          trailing: cart.items.isEmpty
+              ? Container(width: 10.0)
+              : GestureDetector(
+                  onTap: cart.clear,
+                  child: Text(
+                    LN["arassala"][app.ln],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor,
+                    ),
+                  ),
+                ),
         ),
         child: Scaffold(
           body: Padding(
