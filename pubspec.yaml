@@ -30,8 +30,10 @@ dependencies:
   dio_http_cache: ^0.2.11
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
+  in_app_review: ^1.0.4
   path_provider: ^1.6.27
   provider: ^4.3.3
+  share: ^0.6.5+4
 
 dev_dependencies:
   flutter_test:

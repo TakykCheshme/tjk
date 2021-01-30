@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:tjk/language.dart';
 import 'package:tjk/providers/appP.dart';
 import 'package:tjk/shared/tjk_nvigation_bar.dart';
@@ -46,6 +48,29 @@ class SettingsV extends StatelessWidget {
               title: Text(LN["programma_dili"][app.ln], style: titleTS),
               trailing: Text(LN["ln"][app.ln]),
             ),
+            Divider(thickness: 1.0),
+            ListTile(
+              onTap: () async {
+                final InAppReview inAppReview = InAppReview.instance;
+                try {
+                  if (await inAppReview.isAvailable())
+                    inAppReview.requestReview();
+                  else
+                    inAppReview.openStoreListing(appStoreId: "1551455624");
+                } catch (e) {
+                  print("errr");
+                }
+              },
+              leading: Icon(CupertinoIcons.star),
+              title: Text(LN["baha_bermek"][app.ln], style: titleTS),
+            ),
+            Divider(thickness: 1.0),
+            ListTile(
+              onTap: () => Share.share(LN["share_text"][app.ln]),
+              leading: Icon(CupertinoIcons.share),
+              title: Text(LN["paylash"][app.ln], style: titleTS),
+            ),
+            Divider(thickness: 1.0),
           ],
         ),
       ),

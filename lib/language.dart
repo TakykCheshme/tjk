@@ -159,4 +159,18 @@ const Map<String, Map<String, String>> LN = {
     "tm": "Sargydyňyz üstünlikli ugradyldy",
     "ru": "Заказ успешно отправлен",
   },
+  "baha_bermek": {
+    "tm": "Programma baha permek",
+    "ru": "Оценить приложение",
+  },
+  "paylash": {
+    "tm": "Programmany paýlaşmak",
+    "ru": "Поделиться приложением",
+  },
+  "share_text": {
+    "tm":
+        "Türkmenbaşy jins toplumynyň ýokary hilli önümlerini onlaýn satyn almak üçin programma:\niOS: https://apps.apple.com/app/id/1551455624\nAndroid:https://play.google.com/store/apps/details?id=fm.tp.tjk",
+    "ru":
+        "Программа для покупки продукции \"Türkmenbaşy jins toplumy\":\niOS: https://apps.apple.com/app/id/1551455624\nAndroid:https://play.google.com/store/apps/details?id=fm.tp.tjk",
+  },
 };
