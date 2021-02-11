@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const String UPLOAD_URL = "https://tjk.com.tm/presta/upload";
-const String IMAGE_URL = "https://tjk.com.tm/presta/img/p";
+const String UPLOAD_URL = "https://tjk.com.tm/upload";
+const String IMAGE_URL = "https://tjk.com.tm/img/p";
 
 const TextStyle titleTS = TextStyle(fontSize: 20.0);
 const TextStyle title28TS = TextStyle(fontSize: 28.0);

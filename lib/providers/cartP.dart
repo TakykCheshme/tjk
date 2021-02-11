@@ -113,7 +113,7 @@ class CartP extends ChangeNotifier {
 
     int result = await Network().orderCreate(
       language: _ln,
-      address: "Ady: " + account.name + ", Salgysy: " + account.address,
+      address: "Ady " + account.name + ", Salgysy " + account.address,
       phone: account.phone,
       totalPaid: _totalPrice,
       paymentMethod: _paymentMethod.toString().split(".").last,
