@@ -63,7 +63,7 @@ class _CheckoutVState extends State<CheckoutV> {
                               SizedBox(height: 5.0),
                               CupertinoTextField(
                                 controller: _nameController,
-                                style: title28TS.copyWith(
+                                style: titleTS.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                                 onChanged: (text) => account.name = text,
@@ -73,7 +73,7 @@ class _CheckoutVState extends State<CheckoutV> {
                               SizedBox(height: 5.0),
                               CupertinoTextField(
                                 controller: _addressController,
-                                style: title28TS.copyWith(
+                                style: titleTS.copyWith(
                                     fontWeight: FontWeight.bold),
                                 onChanged: (text) => account.address = text,
                               ),
@@ -82,12 +82,40 @@ class _CheckoutVState extends State<CheckoutV> {
                               SizedBox(height: 5.0),
                               CupertinoTextField(
                                 controller: _phoneController,
-                                style: title28TS.copyWith(
+                                style: titleTS.copyWith(
                                     fontWeight: FontWeight.bold),
                                 onChanged: (text) => account.phone = text,
                               ),
-                              SizedBox(height: 40.0),
-                              Text("Toleg usuly:", style: titleTS),
+                              SizedBox(height: 20.0),
+                              Text(LN["delivery_price"][app.ln],
+                                  style: titleTS),
+                              // SizedBox(height: 5.0),
+                              RadioListTile(
+                                value: "price_ashgabat",
+                                groupValue: cart.deliveryPriceText,
+                                onChanged: (val) =>
+                                    cart.deliveryPriceText = val,
+                                title: Text(
+                                  LN["ashgabat"][app.ln] +
+                                      " (${cart.box.get("price_ashgabat")} m.)",
+                                  style: titleTS.copyWith(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              RadioListTile(
+                                value: "price_other",
+                                groupValue: cart.deliveryPriceText,
+                                onChanged: (val) =>
+                                    cart.deliveryPriceText = val,
+                                title: Text(
+                                  LN["bashga"][app.ln] +
+                                      " (${cart.box.get("price_other")} m.)",
+                                  style: titleTS.copyWith(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              SizedBox(height: 20.0),
+                              Text(LN["toleg_usuly"][app.ln], style: titleTS),
                               SizedBox(height: 5.0),
                               RadioListTile(
                                 value: PaymentMethod.nagt,
@@ -123,13 +151,30 @@ class _CheckoutVState extends State<CheckoutV> {
                                 subtitle: Text(LN["onlayn_subtitle"][app.ln]),
                               ),
                               SizedBox(height: 10.0),
-                              Text("Jemi:", style: titleTS),
+                              Text(
+                                LN["harytlar"][app.ln] +
+                                    ": ${cart.totalPrice.toStringAsFixed(2)} manat",
+                                style: titleTS,
+                              ),
+                              SizedBox(height: 10.0),
+                              Text(
+                                LN["eltip_bermesi"][app.ln] +
+                                    ": ${cart.box.get(cart.deliveryPriceText)} manat",
+                                style: titleTS,
+                              ),
+                              SizedBox(height: 10.0),
+                              Text(LN["jemi"][app.ln] + ":", style: titleTS),
                               SizedBox(height: 5.0),
                               Text(
-                                cart.totalPrice.toStringAsFixed(2) + " manat",
+                                (cart.totalPrice +
+                                            int.parse(cart.box
+                                                .get(cart.deliveryPriceText)))
+                                        .toStringAsFixed(2) +
+                                    " manat",
                                 style: title28TS.copyWith(
                                     fontWeight: FontWeight.bold),
                               ),
+                              SizedBox(height: 20.0),
                             ],
                           ),
                         ),
@@ -194,7 +239,7 @@ class _CheckoutVState extends State<CheckoutV> {
                                           ));
                               });
                           },
-                          "Ugratmak",
+                          LN["ugratmak"][app.ln],
                         )
                       ],
                     ),

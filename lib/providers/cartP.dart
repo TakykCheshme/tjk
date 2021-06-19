@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:tjk/language.dart';
 import 'package:tjk/models/attribute.dart';
 import 'package:tjk/models/cart_item.dart';
 import 'package:tjk/models/product.dart';
@@ -12,7 +11,7 @@ import 'package:tjk/services.dart/network.dart';
 enum PaymentMethod { nagt, kart, online }
 
 class CartP extends ChangeNotifier {
-  Box box;
+  Box box = Hive.box("tjk");
 
   bool _loading = false;
   bool get loading => _loading;
@@ -99,24 +98,26 @@ class CartP extends ChangeNotifier {
     String description = "";
     for (CartItem item in _items)
       description +=
-          "${item.count}x${item.product.price}m. ${item.product.name} (artikul: ${item.product.reference}, olcheg: ${item.attribute.value})\n";
+          "${item.count}x${item.product.price}m. ${item.product.name} (artikul - ${item.product.reference}, olcheg - ${item.attribute.value})\n";
 
     List<Map<String, dynamic>> note = _items
         .map((item) => {
+              "name": item.product.name,
               "count": item.count,
               "cover": item.product.cover.split("/").last.split(".").first,
               "price": item.product.price,
               "title":
-                  "${item.count}x - ${item.product.reference} olcheg:${item.attribute.value}",
+                  "${item.count}x - ${item.product.reference} - ${item.attribute.value}",
             })
         .toList();
 
     int result = await Network().orderCreate(
+      totalPaid: _totalPrice,
       language: _ln,
       address: "Ady " + account.name + ", Salgysy " + account.address,
       phone: account.phone,
-      totalPaid: _totalPrice,
       paymentMethod: _paymentMethod.toString().split(".").last,
+      deliveryPrice: int.parse(box.get(deliveryPriceText)),
       orders: jsonEncode(orders),
       description: description,
       note: jsonEncode(note),
@@ -141,4 +142,14 @@ class CartP extends ChangeNotifier {
   }
 
   AccountP account;
+
+  String _deliveryPriceText = "price_ashgabat";
+  String get deliveryPriceText => _deliveryPriceText;
+  set deliveryPriceText(String price) {
+    _deliveryPriceText = price;
+    deliveryPrice = int.parse(box.get(_deliveryPriceText));
+    notifyListeners();
+  }
+
+  int deliveryPrice = 0;
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:tjk/models/bannerr.dart';
 import 'package:tjk/models/category.dart';
+import 'package:tjk/models/price.dart';
 import 'package:tjk/services.dart/network.dart';
 
 import '../language.dart';
@@ -8,6 +10,7 @@ import '../language.dart';
 class HomeP extends ChangeNotifier {
   List<Bannerr> banners;
   List<Category> categories;
+  Box tjk = Hive.box("tjk");
 
   bool _loading = true;
   bool get loading => _loading;
@@ -38,6 +41,8 @@ class HomeP extends ChangeNotifier {
         categories = data["categories"]
             .map<Category>((json) => Category.fromJson(json))
             .toList();
+        tjk.put("price_ashgabat", data["prices"]["price_ashgabat"]);
+        tjk.put("price_other", data["prices"]["price_other"]);
       }
       _loading = false;
       notifyListeners();

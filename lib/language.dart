@@ -173,4 +173,32 @@ const Map<String, Map<String, String>> LN = {
     "ru":
         "Программа для покупки продукции \"Türkmenbaşy jins toplumy\":\niOS: https://apps.apple.com/app/id/1551455624\nAndroid:https://play.google.com/store/apps/details?id=fm.tp.tjk",
   },
+  "ashgabat": {
+    "tm": "Aşgabat",
+    "ru": "Ашхабад",
+  },
+  "bashga": {
+    "tm": "Türkmenistanyň başga şäherileri",
+    "ru": "Другие города Туркменистана",
+  },
+  "toleg_usuly": {
+    "tm": "Töleg usuly",
+    "ru": "Метод оплаты",
+  },
+  "delivery_price": {
+    "tm": "Eltip bermegiň bahasy",
+    "ru": "Цена доставки",
+  },
+  "harytlar": {
+    "tm": "Haryt(lar)",
+    "ru": "Товар(ы)",
+  },
+  "eltip_bermesi": {
+    "tm": "Eltip bermesi",
+    "ru": "Доставка",
+  },
+  "jemi": {
+    "tm": "Jemi",
+    "ru": "Итого",
+  },
 };

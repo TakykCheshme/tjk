@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:hive/hive.dart';
 
 class Network {
   Dio _dio;
+  Box tjk = Hive.box("tjk");
 
   DioCacheManager _dioCacheManager;
   Options _cacheOptions;
@@ -73,20 +75,28 @@ class Network {
     String orders,
     String description,
     String note,
+    int deliveryPrice,
   }) async {
+    // print("orders $orders");
+    // print("desc $description");
+    // print("note $note");
+    // return 0;
+
     try {
+      FormData data = FormData.fromMap({
+        "address": address,
+        "phone": phone,
+        "total_paid": totalPaid + deliveryPrice,
+        "orders": orders,
+        "language": language,
+        "paymentMethod": paymentMethod,
+        "description": description,
+        "note": note,
+        "delivery_price": deliveryPrice,
+      });
       Response response = await _dio.post(
         "/order_create.php",
-        data: {
-          "language": language,
-          "address": address,
-          "phone": phone,
-          "totalPaid": totalPaid,
-          "paymentMethod": paymentMethod,
-          "orders": orders,
-          "description": description,
-          "note": note,
-        },
+        data: data,
       );
       return response.statusCode;
     } catch (e) {
